@@ -1,0 +1,1017 @@
+Job Zone,Occupation,Data-level,Code,cps_code
+5,Chief Executives,Y,11-1011.00,0010
+5,Chief Sustainability Officers,Y,11-1011.03,0010
+4,General and Operations Managers,Y,11-1021.00,0020
+4,Legislators,Y,11-1031.00,0030
+4,Advertising and Promotions Managers,Y,11-2011.00,0040
+4,Marketing Managers,Y,11-2021.00,0051
+4,Sales Managers,Y,11-2022.00,0052
+4,Public Relations Managers,Y,11-2032.00,0060
+4,Fundraising Managers,Y,11-2033.00,0060
+3,Administrative Services Managers,Y,11-3012.00,0101
+3,Facilities Managers,Y,11-3013.00,0102
+4,Security Managers,Y,11-3013.01,0102
+4,Computer and Information Systems Managers,Y,11-3021.00,0110
+4,Financial Managers,Y,11-3031.00,0120
+4,Treasurers and Controllers,Y,11-3031.01,0120
+5,Investment Fund Managers,Y,11-3031.03,0120
+4,Industrial Production Managers,Y,11-3051.00,0140
+4,Quality Control Systems Managers,Y,11-3051.01,0140
+3,Geothermal Production Managers,Y,11-3051.02,0140
+4,Biofuels Production Managers,Y,11-3051.03,0140
+4,Biomass Power Plant Managers,Y,11-3051.04,0140
+3,Hydroelectric Production Managers,Y,11-3051.06,0140
+4,Purchasing Managers,Y,11-3061.00,0150
+4,"Transportation, Storage, and Distribution Managers",Y,11-3071.00,0160
+4,Supply Chain Managers,Y,11-3071.04,0160
+4,Compensation and Benefits Managers,Y,11-3111.00,0135
+4,Human Resources Managers,Y,11-3121.00,0136
+4,Training and Development Managers,Y,11-3131.00,0137
+4,"Farmers, Ranchers, and Other Agricultural Managers",Y,11-9013.00,0205
+4,Construction Managers,Y,11-9021.00,0220
+4,"Education and Childcare Administrators, Preschool and Daycare",Y,11-9031.00,0230
+5,"Education Administrators, Kindergarten through Secondary",Y,11-9032.00,0230
+5,"Education Administrators, Postsecondary",Y,11-9033.00,0230
+,"Education Administrators, All Other",,11-9039.00,0230
+5,Architectural and Engineering Managers,Y,11-9041.00,0300
+4,Biofuels/Biodiesel Technology and Product Development Managers,Y,11-9041.01,0300
+2,Food Service Managers,Y,11-9051.00,0310
+2,Gambling Managers,Y,11-9071.00,0335
+4,"Entertainment and Recreation Managers, Except Gambling",Y,11-9072.00,0335
+4,Lodging Managers,Y,11-9081.00,0340
+4,Medical and Health Services Managers,Y,11-9111.00,0350
+5,Natural Sciences Managers,Y,11-9121.00,0360
+4,Clinical Research Coordinators,Y,11-9121.01,0360
+4,Water Resource Specialists,Y,11-9121.02,0360
+2,Postmasters and Mail Superintendents,Y,11-9131.00,0400
+4,"Property, Real Estate, and Community Association Managers",Y,11-9141.00,0410
+4,Social and Community Service Managers,Y,11-9151.00,0420
+4,Emergency Management Directors,Y,11-9161.00,0425
+3,Funeral Home Managers,Y,11-9171.00,0325
+,"Personal Service Managers, All Other",,11-9179.00,0426
+4,Fitness and Wellness Coordinators,Y,11-9179.01,0426
+3,Spa Managers,Y,11-9179.02,0426
+,"Managers, All Other",,11-9199.00,0440
+4,Regulatory Affairs Managers,Y,11-9199.01,0440
+4,Compliance Managers,Y,11-9199.02,0440
+4,Loss Prevention Managers,Y,11-9199.08,0440
+3,Wind Energy Operations Managers,Y,11-9199.09,0440
+4,Wind Energy Development Managers,Y,11-9199.10,0440
+4,Brownfield Redevelopment Specialists and Site Managers,Y,11-9199.11,0440
+4,"Agents and Business Managers of Artists, Performers, and Athletes",Y,13-1011.00,0500
+4,"Buyers and Purchasing Agents, Farm Products",Y,13-1021.00,0510
+3,"Wholesale and Retail Buyers, Except Farm Products",Y,13-1022.00,0520
+4,"Purchasing Agents, Except Wholesale, Retail, and Farm Products",Y,13-1023.00,0530
+4,"Claims Adjusters, Examiners, and Investigators",Y,13-1031.00,0540
+3,"Insurance Appraisers, Auto Damage",Y,13-1032.00,0540
+4,Compliance Officers,Y,13-1041.00,0565
+4,Environmental Compliance Inspectors,Y,13-1041.01,0565
+4,Equal Opportunity Representatives and Officers,Y,13-1041.03,0565
+3,Government Property Inspectors and Investigators,Y,13-1041.04,0565
+3,Coroners,Y,13-1041.06,0565
+4,Regulatory Affairs Specialists,Y,13-1041.07,0565
+3,Customs Brokers,Y,13-1041.08,0565
+4,Cost Estimators,Y,13-1051.00,0600
+4,Human Resources Specialists,Y,13-1071.00,0630
+2,Farm Labor Contractors,Y,13-1074.00,0630
+4,Labor Relations Specialists,Y,13-1075.00,0630
+4,Logisticians,Y,13-1081.00,0700
+4,Logistics Engineers,Y,13-1081.01,0700
+4,Logistics Analysts,Y,13-1081.02,0700
+4,Project Management Specialists,Y,13-1082.00,0705
+4,Management Analysts,Y,13-1111.00,0710
+4,"Meeting, Convention, and Event Planners",Y,13-1121.00,0725
+4,Fundraisers,Y,13-1131.00,0726
+4,"Compensation, Benefits, and Job Analysis Specialists",Y,13-1141.00,0640
+4,Training and Development Specialists,Y,13-1151.00,0650
+4,Market Research Analysts and Marketing Specialists,Y,13-1161.00,0735
+4,Search Marketing Strategists,Y,13-1161.01,0735
+,"Business Operations Specialists, All Other",,13-1199.00,0750
+4,Business Continuity Planners,Y,13-1199.04,0750
+4,Sustainability Specialists,Y,13-1199.05,0750
+4,Online Merchants,Y,13-1199.06,0750
+4,Security Management Specialists,Y,13-1199.07,0750
+4,Accountants and Auditors,Y,13-2011.00,0800
+4,Appraisers of Personal and Business Property,Y,13-2022.00,0810
+4,Appraisers and Assessors of Real Estate,Y,13-2023.00,0810
+4,Budget Analysts,Y,13-2031.00,0820
+4,Credit Analysts,Y,13-2041.00,0830
+4,Financial and Investment Analysts,Y,13-2051.00,0845
+4,Personal Financial Advisors,Y,13-2052.00,0850
+4,Insurance Underwriters,Y,13-2053.00,0860
+4,Financial Risk Specialists,Y,13-2054.00,0900
+4,Financial Examiners,Y,13-2061.00,0900
+4,Credit Counselors,Y,13-2071.00,0910
+4,Loan Officers,Y,13-2072.00,0910
+3,"Tax Examiners and Collectors, and Revenue Agents",Y,13-2081.00,0930
+3,Tax Preparers,Y,13-2082.00,0940
+,"Financial Specialists, All Other",,13-2099.00,0960
+5,Financial Quantitative Analysts,Y,13-2099.01,0960
+4,"Fraud Examiners, Investigators and Analysts",Y,13-2099.04,0960
+3,Computer Systems Analysts,Y,15-1211.00,1006
+5,Health Informatics Specialists,Y,15-1211.01,1006
+4,Information Security Analysts,Y,15-1212.00,1007
+5,Computer and Information Research Scientists,Y,15-1221.00,1005
+4,Computer Network Support Specialists,Y,15-1231.00,1050
+3,Computer User Support Specialists,Y,15-1232.00,1050
+4,Computer Network Architects,Y,15-1241.00,1106
+3,Telecommunications Engineering Specialists,Y,15-1241.01,1106
+4,Database Administrators,Y,15-1242.00,1065
+4,Database Architects,Y,15-1243.00,1065
+4,Data Warehousing Specialists,Y,15-1243.01,1065
+4,Network and Computer Systems Administrators,Y,15-1244.00,1105
+4,Computer Programmers,Y,15-1251.00,1010
+4,Software Developers,Y,15-1252.00,1021
+4,Software Quality Assurance Analysts and Testers,Y,15-1253.00,1022
+3,Web Developers,Y,15-1254.00,1031
+4,Web and Digital Interface Designers,Y,15-1255.00,1032
+4,Video Game Designers,Y,15-1255.01,1032
+,"Computer Occupations, All Other",,15-1299.00,1108
+4,Web Administrators,Y,15-1299.01,1108
+3,Geographic Information Systems Technologists and Technicians,Y,15-1299.02,1108
+4,Document Management Specialists,Y,15-1299.03,1108
+4,Penetration Testers,Y,15-1299.04,1108
+4,Information Security Engineers,Y,15-1299.05,1108
+4,Digital Forensics Analysts,Y,15-1299.06,1108
+4,Blockchain Engineers,Y,15-1299.07,1108
+3,Computer Systems Engineers/Architects,Y,15-1299.08,1108
+4,Information Technology Project Managers,Y,15-1299.09,1108
+4,Actuaries,Y,15-2011.00,1200
+5,Mathematicians,Y,15-2021.00,1210
+5,Operations Research Analysts,Y,15-2031.00,1220
+5,Statisticians,Y,15-2041.00,1230
+5,Biostatisticians,Y,15-2041.01,1230
+4,Data Scientists,Y,15-2051.00,1240
+4,Business Intelligence Analysts,Y,15-2051.01,1240
+4,Clinical Data Managers,Y,15-2051.02,1240
+,"Mathematical Science Occupations, All Other",,15-2099.00,1240
+4,Bioinformatics Technicians,Y,15-2099.01,1240
+5,"Architects, Except Landscape and Naval",Y,17-1011.00,1305
+4,Landscape Architects,Y,17-1012.00,1306
+4,Cartographers and Photogrammetrists,Y,17-1021.00,1310
+4,Surveyors,Y,17-1022.00,1310
+4,Geodetic Surveyors,Y,17-1022.01,1310
+4,Aerospace Engineers,Y,17-2011.00,1320
+4,Agricultural Engineers,Y,17-2021.00,1330
+4,Bioengineers and Biomedical Engineers,Y,17-2031.00,1340
+4,Chemical Engineers,Y,17-2041.00,1350
+4,Civil Engineers,Y,17-2051.00,1360
+4,Transportation Engineers,Y,17-2051.01,1360
+4,Water/Wastewater Engineers,Y,17-2051.02,1360
+4,Computer Hardware Engineers,Y,17-2061.00,1400
+4,Electrical Engineers,Y,17-2071.00,1410
+4,"Electronics Engineers, Except Computer",Y,17-2072.00,1410
+4,Radio Frequency Identification Device Specialists,Y,17-2072.01,1410
+4,Environmental Engineers,Y,17-2081.00,1420
+4,"Health and Safety Engineers, Except Mining Safety Engineers and Inspectors",Y,17-2111.00,1430
+4,Fire-Prevention and Protection Engineers,Y,17-2111.02,1430
+4,Industrial Engineers,Y,17-2112.00,1430
+5,Human Factors Engineers and Ergonomists,Y,17-2112.01,1430
+4,Validation Engineers,Y,17-2112.02,1430
+4,Manufacturing Engineers,Y,17-2112.03,1430
+4,Marine Engineers and Naval Architects,Y,17-2121.00,1440
+4,Materials Engineers,Y,17-2131.00,1450
+4,Mechanical Engineers,Y,17-2141.00,1460
+4,Fuel Cell Engineers,Y,17-2141.01,1460
+4,Automotive Engineers,Y,17-2141.02,1460
+4,"Mining and Geological Engineers, Including Mining Safety Engineers",Y,17-2151.00,1500
+4,Nuclear Engineers,Y,17-2161.00,1510
+4,Petroleum Engineers,Y,17-2171.00,1520
+,"Engineers, All Other",,17-2199.00,1530
+4,"Energy Engineers, Except Wind and Solar",Y,17-2199.03,1530
+4,Mechatronics Engineers,Y,17-2199.05,1530
+5,Microsystems Engineers,Y,17-2199.06,1530
+4,Photonics Engineers,Y,17-2199.07,1530
+4,Robotics Engineers,Y,17-2199.08,1530
+5,Nanosystems Engineers,Y,17-2199.09,1530
+4,Wind Energy Engineers,Y,17-2199.10,1530
+4,Solar Energy Systems Engineers,Y,17-2199.11,1530
+3,Architectural and Civil Drafters,Y,17-3011.00,1541
+3,Electrical and Electronics Drafters,Y,17-3012.00,1545
+3,Mechanical Drafters,Y,17-3013.00,1545
+,"Drafters, All Other",,17-3019.00,1545
+3,Aerospace Engineering and Operations Technologists and Technicians,Y,17-3021.00,1555
+3,Civil Engineering Technologists and Technicians,Y,17-3022.00,1555
+3,Electrical and Electronic Engineering Technologists and Technicians,Y,17-3023.00,1551
+3,Electro-Mechanical and Mechatronics Technologists and Technicians,Y,17-3024.00,1555
+3,Robotics Technicians,Y,17-3024.01,1555
+4,Environmental Engineering Technologists and Technicians,Y,17-3025.00,1555
+3,Industrial Engineering Technologists and Technicians,Y,17-3026.00,1555
+4,Nanotechnology Engineering Technologists and Technicians,Y,17-3026.01,1555
+3,Mechanical Engineering Technologists and Technicians,Y,17-3027.00,1555
+3,Automotive Engineering Technicians,Y,17-3027.01,1555
+3,Calibration Technologists and Technicians,Y,17-3028.00,1555
+,"Engineering Technologists and Technicians, Except Drafters, All Other",,17-3029.00,1555
+2,Non-Destructive Testing Specialists,Y,17-3029.01,1555
+3,Photonics Technicians,Y,17-3029.08,1555
+3,Surveying and Mapping Technicians,Y,17-3031.00,1560
+5,Animal Scientists,Y,19-1011.00,1600
+4,Food Scientists and Technologists,Y,19-1012.00,1600
+5,Soil and Plant Scientists,Y,19-1013.00,1600
+5,Biochemists and Biophysicists,Y,19-1021.00,1610
+4,Microbiologists,Y,19-1022.00,1610
+4,Zoologists and Wildlife Biologists,Y,19-1023.00,1610
+,"Biological Scientists, All Other",,19-1029.00,1610
+5,Bioinformatics Scientists,Y,19-1029.01,1610
+5,Molecular and Cellular Biologists,Y,19-1029.02,1610
+5,Geneticists,Y,19-1029.03,1610
+5,Biologists,Y,19-1029.04,1610
+4,Conservation Scientists,Y,19-1031.00,1640
+4,Range Managers,Y,19-1031.02,1640
+4,Park Naturalists,Y,19-1031.03,1640
+4,Foresters,Y,19-1032.00,1640
+5,Epidemiologists,Y,19-1041.00,1650
+5,"Medical Scientists, Except Epidemiologists",Y,19-1042.00,1650
+,"Life Scientists, All Other",,19-1099.00,1660
+5,Astronomers,Y,19-2011.00,1700
+5,Physicists,Y,19-2012.00,1700
+4,Atmospheric and Space Scientists,Y,19-2021.00,1710
+4,Chemists,Y,19-2031.00,1720
+4,Materials Scientists,Y,19-2032.00,1720
+4,"Environmental Scientists and Specialists, Including Health",Y,19-2041.00,1745
+5,Climate Change Policy Analysts,Y,19-2041.01,1745
+5,Environmental Restoration Planners,Y,19-2041.02,1745
+5,Industrial Ecologists,Y,19-2041.03,1745
+5,"Geoscientists, Except Hydrologists and Geographers",Y,19-2042.00,1750
+5,Hydrologists,Y,19-2043.00,1750
+,"Physical Scientists, All Other",,19-2099.00,1760
+4,Remote Sensing Scientists and Technologists,Y,19-2099.01,1760
+5,Economists,Y,19-3011.00,1800
+5,Environmental Economists,Y,19-3011.01,1800
+5,Survey Researchers,Y,19-3022.00,1815
+5,Industrial-Organizational Psychologists,Y,19-3032.00,1825
+5,Clinical and Counseling Psychologists,Y,19-3033.00,1821
+5,School Psychologists,Y,19-3034.00,1822
+,"Psychologists, All Other",,19-3039.00,1825
+5,Neuropsychologists,Y,19-3039.02,1825
+5,Clinical Neuropsychologists,Y,19-3039.03,1825
+5,Sociologists,Y,19-3041.00,1830
+5,Urban and Regional Planners,Y,19-3051.00,1840
+5,Anthropologists and Archeologists,Y,19-3091.00,1860
+4,Geographers,Y,19-3092.00,1860
+5,Historians,Y,19-3093.00,1860
+5,Political Scientists,Y,19-3094.00,1860
+,"Social Scientists and Related Workers, All Other",,19-3099.00,1860
+4,Transportation Planners,Y,19-3099.01,1860
+3,Agricultural Technicians,Y,19-4012.00,1900
+3,Precision Agriculture Technicians,Y,19-4012.01,1900
+3,Food Science Technicians,Y,19-4013.00,1900
+4,Biological Technicians,Y,19-4021.00,1910
+3,Chemical Technicians,Y,19-4031.00,1920
+4,"Environmental Science and Protection Technicians, Including Health",Y,19-4042.00,1935
+4,"Geological Technicians, Except Hydrologic Technicians",Y,19-4043.00,1935
+3,Hydrologic Technicians,Y,19-4044.00,1935
+3,Nuclear Technicians,Y,19-4051.00,1940
+3,Nuclear Monitoring Technicians,Y,19-4051.02,1940
+4,Social Science Research Assistants,Y,19-4061.00,1950
+3,Forest and Conservation Technicians,Y,19-4071.00,1970
+3,Forensic Science Technicians,Y,19-4092.00,1970
+,"Life, Physical, and Social Science Technicians, All Other",,19-4099.00,1970
+3,Quality Control Analysts,Y,19-4099.01,1970
+4,Remote Sensing Technicians,Y,19-4099.03,1970
+4,Occupational Health and Safety Specialists,Y,19-5011.00,1980
+3,Occupational Health and Safety Technicians,Y,19-5012.00,1980
+5,Substance Abuse and Behavioral Disorder Counselors,Y,21-1011.00,2001
+5,"Educational, Guidance, and Career Counselors and Advisors",Y,21-1012.00,2002
+5,Marriage and Family Therapists,Y,21-1013.00,2003
+5,Mental Health Counselors,Y,21-1014.00,2004
+4,Rehabilitation Counselors,Y,21-1015.00,2005
+,"Counselors, All Other",,21-1019.00,2006
+4,"Child, Family, and School Social Workers",Y,21-1021.00,2011
+5,Healthcare Social Workers,Y,21-1022.00,2012
+5,Mental Health and Substance Abuse Social Workers,Y,21-1023.00,2013
+,"Social Workers, All Other",,21-1029.00,2014
+4,Health Education Specialists,Y,21-1091.00,2025
+4,Probation Officers and Correctional Treatment Specialists,Y,21-1092.00,2015
+4,Social and Human Service Assistants,Y,21-1093.00,2016
+4,Community Health Workers,Y,21-1094.00,2025
+,"Community and Social Service Specialists, All Other",,21-1099.00,2025
+5,Clergy,Y,21-2011.00,2040
+4,"Directors, Religious Activities and Education",Y,21-2021.00,2050
+,"Religious Workers, All Other",,21-2099.00,2060
+5,Lawyers,Y,23-1011.00,2100
+5,Judicial Law Clerks,Y,23-1012.00,2105
+5,"Administrative Law Judges, Adjudicators, and Hearing Officers",Y,23-1021.00,2110
+5,"Arbitrators, Mediators, and Conciliators",Y,23-1022.00,2110
+5,"Judges, Magistrate Judges, and Magistrates",Y,23-1023.00,2110
+3,Paralegals and Legal Assistants,Y,23-2011.00,2145
+2,"Title Examiners, Abstractors, and Searchers",Y,23-2093.00,2170
+,"Legal Support Workers, All Other",,23-2099.00,2180
+5,"Business Teachers, Postsecondary",Y,25-1011.00,2205
+5,"Computer Science Teachers, Postsecondary",Y,25-1021.00,2205
+5,"Mathematical Science Teachers, Postsecondary",Y,25-1022.00,2205
+5,"Architecture Teachers, Postsecondary",Y,25-1031.00,2205
+5,"Engineering Teachers, Postsecondary",Y,25-1032.00,2205
+5,"Agricultural Sciences Teachers, Postsecondary",Y,25-1041.00,2205
+5,"Biological Science Teachers, Postsecondary",Y,25-1042.00,2205
+5,"Forestry and Conservation Science Teachers, Postsecondary",Y,25-1043.00,2205
+5,"Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary",Y,25-1051.00,2205
+5,"Chemistry Teachers, Postsecondary",Y,25-1052.00,2205
+5,"Environmental Science Teachers, Postsecondary",Y,25-1053.00,2205
+5,"Physics Teachers, Postsecondary",Y,25-1054.00,2205
+5,"Anthropology and Archeology Teachers, Postsecondary",Y,25-1061.00,2205
+5,"Area, Ethnic, and Cultural Studies Teachers, Postsecondary",Y,25-1062.00,2205
+5,"Economics Teachers, Postsecondary",Y,25-1063.00,2205
+5,"Geography Teachers, Postsecondary",Y,25-1064.00,2205
+5,"Political Science Teachers, Postsecondary",Y,25-1065.00,2205
+5,"Psychology Teachers, Postsecondary",Y,25-1066.00,2205
+5,"Sociology Teachers, Postsecondary",Y,25-1067.00,2205
+,"Social Sciences Teachers, Postsecondary, All Other",,25-1069.00,2205
+5,"Health Specialties Teachers, Postsecondary",Y,25-1071.00,2205
+5,"Nursing Instructors and Teachers, Postsecondary",Y,25-1072.00,2205
+5,"Education Teachers, Postsecondary",Y,25-1081.00,2205
+5,"Library Science Teachers, Postsecondary",Y,25-1082.00,2205
+5,"Criminal Justice and Law Enforcement Teachers, Postsecondary",Y,25-1111.00,2205
+5,"Law Teachers, Postsecondary",Y,25-1112.00,2205
+5,"Social Work Teachers, Postsecondary",Y,25-1113.00,2205
+5,"Art, Drama, and Music Teachers, Postsecondary",Y,25-1121.00,2205
+5,"Communications Teachers, Postsecondary",Y,25-1122.00,2205
+5,"English Language and Literature Teachers, Postsecondary",Y,25-1123.00,2205
+5,"Foreign Language and Literature Teachers, Postsecondary",Y,25-1124.00,2205
+5,"History Teachers, Postsecondary",Y,25-1125.00,2205
+5,"Philosophy and Religion Teachers, Postsecondary",Y,25-1126.00,2205
+5,"Family and Consumer Sciences Teachers, Postsecondary",Y,25-1192.00,2205
+5,"Recreation and Fitness Studies Teachers, Postsecondary",Y,25-1193.00,2205
+3,"Career/Technical Education Teachers, Postsecondary",Y,25-1194.00,2205
+,"Postsecondary Teachers, All Other",,25-1199.00,2205
+3,"Preschool Teachers, Except Special Education",Y,25-2011.00,2300
+4,"Kindergarten Teachers, Except Special Education",Y,25-2012.00,2300
+4,"Elementary School Teachers, Except Special Education",Y,25-2021.00,2310
+4,"Middle School Teachers, Except Special and Career/Technical Education",Y,25-2022.00,2310
+4,"Career/Technical Education Teachers, Middle School",Y,25-2023.00,2310
+4,"Secondary School Teachers, Except Special and Career/Technical Education",Y,25-2031.00,2320
+4,"Career/Technical Education Teachers, Secondary School",Y,25-2032.00,2320
+5,"Special Education Teachers, Preschool",Y,25-2051.00,2330
+4,"Special Education Teachers, Kindergarten",Y,25-2055.00,2330
+4,"Special Education Teachers, Elementary School",Y,25-2056.00,2330
+4,"Special Education Teachers, Middle School",Y,25-2057.00,2330
+4,"Special Education Teachers, Secondary School",Y,25-2058.00,2330
+,"Special Education Teachers, All Other",,25-2059.00,2330
+5,Adapted Physical Education Specialists,Y,25-2059.01,2330
+4,"Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors",Y,25-3011.00,2360
+3,Self-Enrichment Teachers,Y,25-3021.00,2360
+4,"Substitute Teachers, Short-Term",Y,25-3031.00,2360
+3,Tutors,Y,25-3041.00,2350
+,"Teachers and Instructors, All Other",,25-3099.00,2360
+5,Archivists,Y,25-4011.00,2400
+5,Curators,Y,25-4012.00,2400
+4,Museum Technicians and Conservators,Y,25-4013.00,2400
+5,Librarians and Media Collections Specialists,Y,25-4022.00,2435
+3,Library Technicians,Y,25-4031.00,2440
+5,Farm and Home Management Educators,Y,25-9021.00,2555
+5,Instructional Coordinators,Y,25-9031.00,2555
+3,"Teaching Assistants, Preschool, Elementary, Middle, and Secondary School, Except Special Education",Y,25-9042.00,2545
+3,"Teaching Assistants, Special Education",Y,25-9043.00,2545
+5,"Teaching Assistants, Postsecondary",Y,25-9044.00,2545
+,"Teaching Assistants, All Other",,25-9049.00,2545
+,"Educational Instruction and Library Workers, All Other",,25-9099.00,2555
+4,Art Directors,Y,27-1011.00,2600
+3,Craft Artists,Y,27-1012.00,2600
+3,"Fine Artists, Including Painters, Sculptors, and Illustrators",Y,27-1013.00,2600
+4,Special Effects Artists and Animators,Y,27-1014.00,2600
+,"Artists and Related Workers, All Other",,27-1019.00,2600
+4,Commercial and Industrial Designers,Y,27-1021.00,2631
+3,Fashion Designers,Y,27-1022.00,2632
+2,Floral Designers,Y,27-1023.00,2633
+4,Graphic Designers,Y,27-1024.00,2634
+4,Interior Designers,Y,27-1025.00,2635
+3,Merchandise Displayers and Window Trimmers,Y,27-1026.00,2636
+5,Set and Exhibit Designers,Y,27-1027.00,2640
+,"Designers, All Other",,27-1029.00,2640
+2,Actors,Y,27-2011.00,2700
+4,Producers and Directors,Y,27-2012.00,2710
+4,Media Programming Directors,Y,27-2012.03,2710
+4,Talent Directors,Y,27-2012.04,2710
+4,Media Technical Directors/Managers,Y,27-2012.05,2710
+2,Athletes and Sports Competitors,Y,27-2021.00,2721
+4,Coaches and Scouts,Y,27-2022.00,2722
+2,"Umpires, Referees, and Other Sports Officials",Y,27-2023.00,2723
+3,Dancers,Y,27-2031.00,2740
+3,Choreographers,Y,27-2032.00,2740
+4,Music Directors and Composers,Y,27-2041.00,2751
+4,Musicians and Singers,Y,27-2042.00,2752
+2,"Disc Jockeys, Except Radio",Y,27-2091.00,2755
+,"Entertainers and Performers, Sports and Related Workers, All Other",,27-2099.00,2770
+4,Broadcast Announcers and Radio Disc Jockeys,Y,27-3011.00,2805
+4,"News Analysts, Reporters, and Journalists",Y,27-3023.00,2810
+4,Public Relations Specialists,Y,27-3031.00,2825
+4,Editors,Y,27-3041.00,2830
+4,Technical Writers,Y,27-3042.00,2840
+4,Writers and Authors,Y,27-3043.00,2850
+4,"Poets, Lyricists and Creative Writers",Y,27-3043.05,2850
+4,Interpreters and Translators,Y,27-3091.00,2861
+3,Court Reporters and Simultaneous Captioners,Y,27-3092.00,2862
+,"Media and Communication Workers, All Other",,27-3099.00,2865
+3,Audio and Video Technicians,Y,27-4011.00,2905
+3,Broadcast Technicians,Y,27-4012.00,2905
+3,Sound Engineering Technicians,Y,27-4014.00,2905
+3,Lighting Technicians,Y,27-4015.00,2905
+3,Photographers,Y,27-4021.00,2910
+3,"Camera Operators, Television, Video, and Film",Y,27-4031.00,2920
+4,Film and Video Editors,Y,27-4032.00,2920
+,"Media and Communication Equipment Workers, All Other",,27-4099.00,2970
+5,Chiropractors,Y,29-1011.00,3000
+5,"Dentists, General",Y,29-1021.00,3010
+5,Oral and Maxillofacial Surgeons,Y,29-1022.00,3010
+5,Orthodontists,Y,29-1023.00,3010
+5,Prosthodontists,Y,29-1024.00,3010
+,"Dentists, All Other Specialists",,29-1029.00,3010
+5,Dietitians and Nutritionists,Y,29-1031.00,3030
+5,Optometrists,Y,29-1041.00,3040
+5,Pharmacists,Y,29-1051.00,3050
+5,Physician Assistants,Y,29-1071.00,3110
+5,Anesthesiologist Assistants,Y,29-1071.01,3110
+5,Podiatrists,Y,29-1081.00,3120
+5,Occupational Therapists,Y,29-1122.00,3150
+5,"Low Vision Therapists, Orientation and Mobility Specialists, and Vision Rehabilitation Therapists",Y,29-1122.01,3150
+5,Physical Therapists,Y,29-1123.00,3160
+3,Radiation Therapists,Y,29-1124.00,3200
+4,Recreational Therapists,Y,29-1125.00,3210
+3,Respiratory Therapists,Y,29-1126.00,3220
+5,Speech-Language Pathologists,Y,29-1127.00,3230
+4,Exercise Physiologists,Y,29-1128.00,3235
+,"Therapists, All Other",,29-1129.00,3245
+5,Art Therapists,Y,29-1129.01,3245
+4,Music Therapists,Y,29-1129.02,3245
+5,Veterinarians,Y,29-1131.00,3250
+4,Registered Nurses,Y,29-1141.00,3255
+3,Acute Care Nurses,Y,29-1141.01,3255
+5,Advanced Practice Psychiatric Nurses,Y,29-1141.02,3255
+4,Critical Care Nurses,Y,29-1141.03,3255
+5,Clinical Nurse Specialists,Y,29-1141.04,3255
+5,Nurse Anesthetists,Y,29-1151.00,3256
+5,Nurse Midwives,Y,29-1161.00,3257
+5,Nurse Practitioners,Y,29-1171.00,3258
+5,Audiologists,Y,29-1181.00,3140
+5,Anesthesiologists,Y,29-1211.00,3090
+5,Cardiologists,Y,29-1212.00,3090
+5,Dermatologists,Y,29-1213.00,3090
+5,Emergency Medicine Physicians,Y,29-1214.00,3065
+5,Family Medicine Physicians,Y,29-1215.00,3090
+5,General Internal Medicine Physicians,Y,29-1216.00,3090
+5,Neurologists,Y,29-1217.00,3090
+5,Obstetricians and Gynecologists,Y,29-1218.00,3090
+5,"Pediatricians, General",Y,29-1221.00,3090
+5,"Physicians, Pathologists",Y,29-1222.00,3090
+5,Psychiatrists,Y,29-1223.00,3090
+5,Radiologists,Y,29-1224.00,3070
+,"Physicians, All Other",,29-1229.00,3090
+5,Allergists and Immunologists,Y,29-1229.01,3090
+5,Hospitalists,Y,29-1229.02,3090
+5,Urologists,Y,29-1229.03,3090
+5,Physical Medicine and Rehabilitation Physicians,Y,29-1229.04,3090
+5,Preventive Medicine Physicians,Y,29-1229.05,3090
+5,Sports Medicine Physicians,Y,29-1229.06,3090
+5,"Ophthalmologists, Except Pediatric",Y,29-1241.00,3100
+5,"Orthopedic Surgeons, Except Pediatric",Y,29-1242.00,3100
+5,Pediatric Surgeons,Y,29-1243.00,3100
+,"Surgeons, All Other",,29-1249.00,3100
+5,Acupuncturists,Y,29-1291.00,3261
+3,Dental Hygienists,Y,29-1292.00,3310
+,"Healthcare Diagnosing or Treating Practitioners, All Other",,29-1299.00,3270
+5,Naturopathic Physicians,Y,29-1299.01,3270
+5,Orthoptists,Y,29-1299.02,3270
+4,Medical and Clinical Laboratory Technologists,Y,29-2011.00,3300
+4,Cytogenetic Technologists,Y,29-2011.01,3300
+5,Cytotechnologists,Y,29-2011.02,3300
+4,Histotechnologists,Y,29-2011.04,3300
+3,Medical and Clinical Laboratory Technicians,Y,29-2012.00,3300
+3,Histology Technicians,Y,29-2012.01,3300
+3,Cardiovascular Technologists and Technicians,Y,29-2031.00,3321
+3,Diagnostic Medical Sonographers,Y,29-2032.00,3322
+3,Nuclear Medicine Technologists,Y,29-2033.00,3330
+3,Radiologic Technologists and Technicians,Y,29-2034.00,3323
+3,Magnetic Resonance Imaging Technologists,Y,29-2035.00,3324
+4,Medical Dosimetrists,Y,29-2036.00,3330
+3,Emergency Medical Technicians,Y,29-2042.00,3401
+3,Paramedics,Y,29-2043.00,3402
+3,Dietetic Technicians,Y,29-2051.00,3430
+3,Pharmacy Technicians,Y,29-2052.00,3421
+3,Psychiatric Technicians,Y,29-2053.00,3422
+3,Surgical Technologists,Y,29-2055.00,3423
+3,Veterinary Technologists and Technicians,Y,29-2056.00,3424
+3,Ophthalmic Medical Technicians,Y,29-2057.00,3430
+3,Licensed Practical and Licensed Vocational Nurses,Y,29-2061.00,3500
+3,Medical Records Specialists,Y,29-2072.00,3515
+3,"Opticians, Dispensing",Y,29-2081.00,3520
+5,Orthotists and Prosthetists,Y,29-2091.00,3545
+3,Hearing Aid Specialists,Y,29-2092.00,3545
+,"Health Technologists and Technicians, All Other",,29-2099.00,3545
+3,Neurodiagnostic Technologists,Y,29-2099.01,3545
+3,Ophthalmic Medical Technologists,Y,29-2099.05,3545
+3,Patient Representatives,Y,29-2099.08,3545
+3,Health Information Technologists and Medical Registrars,Y,29-9021.00,3550
+5,Athletic Trainers,Y,29-9091.00,3550
+5,Genetic Counselors,Y,29-9092.00,3550
+3,Surgical Assistants,Y,29-9093.00,3550
+,"Healthcare Practitioners and Technical Workers, All Other",,29-9099.00,3550
+5,Midwives,Y,29-9099.01,3550
+2,Home Health Aides,Y,31-1121.00,3601
+2,Personal Care Aides,Y,31-1122.00,3602
+3,Nursing Assistants,Y,31-1131.00,3603
+2,Orderlies,Y,31-1132.00,3605
+2,Psychiatric Aides,Y,31-1133.00,3605
+3,Occupational Therapy Assistants,Y,31-2011.00,3610
+3,Occupational Therapy Aides,Y,31-2012.00,3610
+3,Physical Therapist Assistants,Y,31-2021.00,3620
+2,Physical Therapist Aides,Y,31-2022.00,3620
+3,Massage Therapists,Y,31-9011.00,3630
+3,Dental Assistants,Y,31-9091.00,3640
+3,Medical Assistants,Y,31-9092.00,3645
+2,Medical Equipment Preparers,Y,31-9093.00,3655
+3,Medical Transcriptionists,Y,31-9094.00,3646
+2,Pharmacy Aides,Y,31-9095.00,3647
+2,Veterinary Assistants and Laboratory Animal Caretakers,Y,31-9096.00,3648
+3,Phlebotomists,Y,31-9097.00,3649
+,"Healthcare Support Workers, All Other",,31-9099.00,3655
+3,Speech-Language Pathology Assistants,Y,31-9099.01,3655
+2,Endoscopy Technicians,Y,31-9099.02,3655
+3,First-Line Supervisors of Correctional Officers,Y,33-1011.00,3700
+2,First-Line Supervisors of Police and Detectives,Y,33-1012.00,3710
+3,First-Line Supervisors of Firefighting and Prevention Workers,Y,33-1021.00,3720
+2,First-Line Supervisors of Security Workers,Y,33-1091.00,3725
+,"First-Line Supervisors of Protective Service Workers, All Other",,33-1099.00,3735
+3,Firefighters,Y,33-2011.00,3740
+3,Fire Inspectors and Investigators,Y,33-2021.00,3750
+3,Forest Fire Inspectors and Prevention Specialists,Y,33-2022.00,3750
+3,Bailiffs,Y,33-3011.00,3801
+2,Correctional Officers and Jailers,Y,33-3012.00,3802
+3,Detectives and Criminal Investigators,Y,33-3021.00,3820
+3,Police Identification and Records Officers,Y,33-3021.02,3820
+4,Intelligence Analysts,Y,33-3021.06,3820
+4,Fish and Game Wardens,Y,33-3031.00,3830
+2,Parking Enforcement Workers,Y,33-3041.00,3840
+3,Police and Sheriff's Patrol Officers,Y,33-3051.00,3870
+3,Customs and Border Protection Officers,Y,33-3051.04,3870
+3,Transit and Railroad Police,Y,33-3052.00,3870
+2,Animal Control Workers,Y,33-9011.00,3900
+3,Private Detectives and Investigators,Y,33-9021.00,3910
+2,Gambling Surveillance Officers and Gambling Investigators,Y,33-9031.00,3930
+2,Security Guards,Y,33-9032.00,3930
+2,Crossing Guards and Flaggers,Y,33-9091.00,3940
+2,"Lifeguards, Ski Patrol, and Other Recreational Protective Service Workers",Y,33-9092.00,3960
+2,Transportation Security Screeners,Y,33-9093.00,3945
+2,School Bus Monitors,Y,33-9094.00,3946
+,"Protective Service Workers, All Other",,33-9099.00,3960
+2,Retail Loss Prevention Specialists,Y,33-9099.02,3960
+3,Chefs and Head Cooks,Y,35-1011.00,4000
+2,First-Line Supervisors of Food Preparation and Serving Workers,Y,35-1012.00,4010
+1,"Cooks, Fast Food",Y,35-2011.00,4020
+2,"Cooks, Institution and Cafeteria",Y,35-2012.00,4020
+3,"Cooks, Private Household",Y,35-2013.00,4020
+2,"Cooks, Restaurant",Y,35-2014.00,4020
+2,"Cooks, Short Order",Y,35-2015.00,4020
+,"Cooks, All Other",,35-2019.00,4020
+2,Food Preparation Workers,Y,35-2021.00,4030
+2,Bartenders,Y,35-3011.00,4040
+1,Fast Food and Counter Workers,Y,35-3023.00,4055
+1,Baristas,Y,35-3023.01,4055
+2,Waiters and Waitresses,Y,35-3031.00,4110
+2,"Food Servers, Nonrestaurant",Y,35-3041.00,4120
+1,Dining Room and Cafeteria Attendants and Bartender Helpers,Y,35-9011.00,4130
+1,Dishwashers,Y,35-9021.00,4140
+2,"Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop",Y,35-9031.00,4150
+,"Food Preparation and Serving Related Workers, All Other",,35-9099.00,4160
+2,First-Line Supervisors of Housekeeping and Janitorial Workers,Y,37-1011.00,4200
+3,"First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",Y,37-1012.00,4210
+3,"Janitors and Cleaners, Except Maids and Housekeeping Cleaners",Y,37-2011.00,4220
+1,Maids and Housekeeping Cleaners,Y,37-2012.00,4230
+,"Building Cleaning Workers, All Other",,37-2019.00,4220
+2,Pest Control Workers,Y,37-2021.00,4240
+1,Landscaping and Groundskeeping Workers,Y,37-3011.00,4251
+2,"Pesticide Handlers, Sprayers, and Applicators, Vegetation",Y,37-3012.00,4255
+2,Tree Trimmers and Pruners,Y,37-3013.00,4252
+,"Grounds Maintenance Workers, All Other",,37-3019.00,4255
+2,First-Line Supervisors of Gambling Services Workers,Y,39-1013.00,4330
+2,"First-Line Supervisors of Entertainment and Recreation Workers, Except Gambling Services",Y,39-1014.00,4330
+3,First-Line Supervisors of Personal Service Workers,Y,39-1022.00,4330
+2,Animal Trainers,Y,39-2011.00,4340
+2,Animal Caretakers,Y,39-2021.00,4350
+2,Gambling Dealers,Y,39-3011.00,4400
+2,Gambling and Sports Book Writers and Runners,Y,39-3012.00,4400
+,"Gambling Service Workers, All Other",,39-3019.00,4400
+2,Motion Picture Projectionists,Y,39-3021.00,4435
+2,"Ushers, Lobby Attendants, and Ticket Takers",Y,39-3031.00,4420
+1,Amusement and Recreation Attendants,Y,39-3091.00,4435
+2,Costume Attendants,Y,39-3092.00,4435
+2,"Locker Room, Coatroom, and Dressing Room Attendants",Y,39-3093.00,4435
+,"Entertainment Attendants and Related Workers, All Other",,39-3099.00,4435
+3,Embalmers,Y,39-4011.00,4461
+2,Crematory Operators,Y,39-4012.00,4461
+2,Funeral Attendants,Y,39-4021.00,4461
+3,"Morticians, Undertakers, and Funeral Arrangers",Y,39-4031.00,4465
+3,Barbers,Y,39-5011.00,4500
+3,"Hairdressers, Hairstylists, and Cosmetologists",Y,39-5012.00,4510
+3,"Makeup Artists, Theatrical and Performance",Y,39-5091.00,4525
+2,Manicurists and Pedicurists,Y,39-5092.00,4521
+2,Shampooers,Y,39-5093.00,4525
+3,Skincare Specialists,Y,39-5094.00,4522
+2,Baggage Porters and Bellhops,Y,39-6011.00,4530
+3,Concierges,Y,39-6012.00,4530
+3,Tour Guides and Escorts,Y,39-7011.00,4540
+2,Travel Guides,Y,39-7012.00,4540
+2,Childcare Workers,Y,39-9011.00,4600
+2,Nannies,Y,39-9011.01,4600
+3,Exercise Trainers and Group Fitness Instructors,Y,39-9031.00,4621
+4,Recreation Workers,Y,39-9032.00,4622
+3,Residential Advisors,Y,39-9041.00,4640
+,"Personal Care and Service Workers, All Other",,39-9099.00,4655
+2,First-Line Supervisors of Retail Sales Workers,Y,41-1011.00,4700
+4,First-Line Supervisors of Non-Retail Sales Workers,Y,41-1012.00,4710
+2,Cashiers,Y,41-2011.00,4720
+2,Gambling Change Persons and Booth Cashiers,Y,41-2012.00,4720
+2,Counter and Rental Clerks,Y,41-2021.00,4740
+2,Parts Salespersons,Y,41-2022.00,4750
+2,Retail Salespersons,Y,41-2031.00,4760
+4,Advertising Sales Agents,Y,41-3011.00,4800
+4,Insurance Sales Agents,Y,41-3021.00,4810
+4,"Securities, Commodities, and Financial Services Sales Agents",Y,41-3031.00,4820
+3,Travel Agents,Y,41-3041.00,4830
+2,"Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",Y,41-3091.00,4840
+4,"Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products",Y,41-4011.00,4850
+3,Solar Sales Representatives and Assessors,Y,41-4011.07,4850
+4,"Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products",Y,41-4012.00,4850
+2,Demonstrators and Product Promoters,Y,41-9011.00,4900
+2,Models,Y,41-9012.00,4900
+4,Real Estate Brokers,Y,41-9021.00,4920
+3,Real Estate Sales Agents,Y,41-9022.00,4920
+4,Sales Engineers,Y,41-9031.00,4930
+2,Telemarketers,Y,41-9041.00,4940
+1,"Door-to-Door Sales Workers, News and Street Vendors, and Related Workers",Y,41-9091.00,4950
+,"Sales and Related Workers, All Other",,41-9099.00,4965
+3,First-Line Supervisors of Office and Administrative Support Workers,Y,43-1011.00,5000
+2,"Switchboard Operators, Including Answering Service",Y,43-2011.00,5010
+2,Telephone Operators,Y,43-2021.00,5020
+,"Communications Equipment Operators, All Other",,43-2099.00,5040
+2,Bill and Account Collectors,Y,43-3011.00,5100
+3,Billing and Posting Clerks,Y,43-3021.00,5110
+3,"Bookkeeping, Accounting, and Auditing Clerks",Y,43-3031.00,5120
+2,Gambling Cage Workers,Y,43-3041.00,5130
+3,Payroll and Timekeeping Clerks,Y,43-3051.00,5140
+2,Procurement Clerks,Y,43-3061.00,5150
+2,Tellers,Y,43-3071.00,5160
+,"Financial Clerks, All Other",,43-3099.00,5165
+3,Brokerage Clerks,Y,43-4011.00,5200
+2,Correspondence Clerks,Y,43-4021.00,5210
+2,"Court, Municipal, and License Clerks",Y,43-4031.00,5220
+2,"Credit Authorizers, Checkers, and Clerks",Y,43-4041.00,5230
+2,Customer Service Representatives,Y,43-4051.00,5240
+3,"Eligibility Interviewers, Government Programs",Y,43-4061.00,5250
+2,File Clerks,Y,43-4071.00,5260
+2,"Hotel, Motel, and Resort Desk Clerks",Y,43-4081.00,5300
+3,"Interviewers, Except Eligibility and Loan",Y,43-4111.00,5310
+2,"Library Assistants, Clerical",Y,43-4121.00,5320
+3,Loan Interviewers and Clerks,Y,43-4131.00,5330
+3,New Accounts Clerks,Y,43-4141.00,5340
+2,Order Clerks,Y,43-4151.00,5350
+3,"Human Resources Assistants, Except Payroll and Timekeeping",Y,43-4161.00,5360
+2,Receptionists and Information Clerks,Y,43-4171.00,5400
+2,Reservation and Transportation Ticket Agents and Travel Clerks,Y,43-4181.00,5410
+,"Information and Record Clerks, All Other",,43-4199.00,5420
+2,Cargo and Freight Agents,Y,43-5011.00,5500
+2,Freight Forwarders,Y,43-5011.01,5500
+2,Couriers and Messengers,Y,43-5021.00,5510
+2,Public Safety Telecommunicators,Y,43-5031.00,5521
+2,"Dispatchers, Except Police, Fire, and Ambulance",Y,43-5032.00,5522
+2,"Meter Readers, Utilities",Y,43-5041.00,5530
+2,Postal Service Clerks,Y,43-5051.00,5540
+2,Postal Service Mail Carriers,Y,43-5052.00,5550
+2,"Postal Service Mail Sorters, Processors, and Processing Machine Operators",Y,43-5053.00,5560
+2,"Production, Planning, and Expediting Clerks",Y,43-5061.00,5600
+2,"Shipping, Receiving, and Inventory Clerks",Y,43-5071.00,5610
+2,"Weighers, Measurers, Checkers, and Samplers, Recordkeeping",Y,43-5111.00,5630
+3,Executive Secretaries and Executive Administrative Assistants,Y,43-6011.00,5710
+3,Legal Secretaries and Administrative Assistants,Y,43-6012.00,5720
+2,Medical Secretaries and Administrative Assistants,Y,43-6013.00,5730
+2,"Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",Y,43-6014.00,5740
+2,Data Entry Keyers,Y,43-9021.00,5810
+2,Word Processors and Typists,Y,43-9022.00,5820
+3,Desktop Publishers,Y,43-9031.00,5830
+2,Insurance Claims and Policy Processing Clerks,Y,43-9041.00,5840
+2,"Mail Clerks and Mail Machine Operators, Except Postal Service",Y,43-9051.00,5850
+2,"Office Clerks, General",Y,43-9061.00,5860
+2,"Office Machine Operators, Except Computer",Y,43-9071.00,5900
+4,Proofreaders and Copy Markers,Y,43-9081.00,5910
+4,Statistical Assistants,Y,43-9111.00,5920
+,"Office and Administrative Support Workers, All Other",,43-9199.00,5940
+3,"First-Line Supervisors of Farming, Fishing, and Forestry Workers",Y,45-1011.00,6005
+2,Agricultural Inspectors,Y,45-2011.00,6010
+2,Animal Breeders,Y,45-2021.00,6020
+1,"Graders and Sorters, Agricultural Products",Y,45-2041.00,6040
+1,Agricultural Equipment Operators,Y,45-2091.00,6050
+1,"Farmworkers and Laborers, Crop, Nursery, and Greenhouse",Y,45-2092.00,6050
+2,"Farmworkers, Farm, Ranch, and Aquacultural Animals",Y,45-2093.00,6050
+,"Agricultural Workers, All Other",,45-2099.00,6050
+1,Fishing and Hunting Workers,Y,45-3031.00,6115
+2,Forest and Conservation Workers,Y,45-4011.00,6120
+1,Fallers,Y,45-4021.00,6130
+1,Logging Equipment Operators,Y,45-4022.00,6130
+2,Log Graders and Scalers,Y,45-4023.00,6130
+,"Logging Workers, All Other",,45-4029.00,6130
+3,First-Line Supervisors of Construction Trades and Extraction Workers,Y,47-1011.00,6200
+3,Solar Energy Installation Managers,Y,47-1011.03,6200
+3,Boilermakers,Y,47-2011.00,6210
+2,Brickmasons and Blockmasons,Y,47-2021.00,6220
+3,Stonemasons,Y,47-2022.00,6220
+2,Carpenters,Y,47-2031.00,6230
+2,Carpet Installers,Y,47-2041.00,6240
+2,"Floor Layers, Except Carpet, Wood, and Hard Tiles",Y,47-2042.00,6240
+1,Floor Sanders and Finishers,Y,47-2043.00,6240
+2,Tile and Stone Setters,Y,47-2044.00,6240
+1,Cement Masons and Concrete Finishers,Y,47-2051.00,6250
+2,Terrazzo Workers and Finishers,Y,47-2053.00,6250
+2,Construction Laborers,Y,47-2061.00,6260
+2,"Paving, Surfacing, and Tamping Equipment Operators",Y,47-2071.00,6305
+2,Pile Driver Operators,Y,47-2072.00,6305
+2,Operating Engineers and Other Construction Equipment Operators,Y,47-2073.00,6305
+2,Drywall and Ceiling Tile Installers,Y,47-2081.00,6330
+2,Tapers,Y,47-2082.00,6330
+3,Electricians,Y,47-2111.00,6355
+2,Glaziers,Y,47-2121.00,6360
+2,"Insulation Workers, Floor, Ceiling, and Wall",Y,47-2131.00,6400
+2,"Insulation Workers, Mechanical",Y,47-2132.00,6400
+2,"Painters, Construction and Maintenance",Y,47-2141.00,6410
+2,Paperhangers,Y,47-2142.00,6410
+2,Pipelayers,Y,47-2151.00,6441
+3,"Plumbers, Pipefitters, and Steamfitters",Y,47-2152.00,6442
+3,Solar Thermal Installers and Technicians,Y,47-2152.04,6442
+1,Plasterers and Stucco Masons,Y,47-2161.00,6460
+2,Reinforcing Iron and Rebar Workers,Y,47-2171.00,6500
+2,Roofers,Y,47-2181.00,6515
+2,Sheet Metal Workers,Y,47-2211.00,6520
+2,Structural Iron and Steel Workers,Y,47-2221.00,6530
+2,Solar Photovoltaic Installers,Y,47-2231.00,6540
+2,"Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters",Y,47-3011.00,6600
+2,Helpers--Carpenters,Y,47-3012.00,6600
+2,Helpers--Electricians,Y,47-3013.00,6600
+1,"Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons",Y,47-3014.00,6600
+2,"Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",Y,47-3015.00,6600
+2,Helpers--Roofers,Y,47-3016.00,6600
+,"Helpers, Construction Trades, All Other",,47-3019.00,6600
+3,Construction and Building Inspectors,Y,47-4011.00,6660
+3,Energy Auditors,Y,47-4011.01,6660
+3,Elevator and Escalator Installers and Repairers,Y,47-4021.00,6700
+2,Fence Erectors,Y,47-4031.00,6710
+3,Hazardous Materials Removal Workers,Y,47-4041.00,6720
+2,Highway Maintenance Workers,Y,47-4051.00,6730
+2,Rail-Track Laying and Maintenance Equipment Operators,Y,47-4061.00,6740
+1,Septic Tank Servicers and Sewer Pipe Cleaners,Y,47-4071.00,6750
+2,Segmental Pavers,Y,47-4091.00,6765
+,"Construction and Related Workers, All Other",,47-4099.00,6765
+2,Weatherization Installers and Technicians,Y,47-4099.03,6765
+1,"Derrick Operators, Oil and Gas",Y,47-5011.00,6800
+2,"Rotary Drill Operators, Oil and Gas",Y,47-5012.00,6800
+2,"Service Unit Operators, Oil and Gas",Y,47-5013.00,6800
+2,"Excavating and Loading Machine and Dragline Operators, Surface Mining",Y,47-5022.00,6821
+2,"Earth Drillers, Except Oil and Gas",Y,47-5023.00,6825
+2,"Explosives Workers, Ordnance Handling Experts, and Blasters",Y,47-5032.00,6835
+2,Continuous Mining Machine Operators,Y,47-5041.00,6850
+2,"Roof Bolters, Mining",Y,47-5043.00,6850
+2,"Loading and Moving Machine Operators, Underground Mining",Y,47-5044.00,6850
+,"Underground Mining Machine Operators, All Other",,47-5049.00,6850
+1,"Rock Splitters, Quarry",Y,47-5051.00,6950
+1,"Roustabouts, Oil and Gas",Y,47-5071.00,6920
+2,Helpers--Extraction Workers,Y,47-5081.00,6950
+,"Extraction Workers, All Other",,47-5099.00,6950
+3,"First-Line Supervisors of Mechanics, Installers, and Repairers",Y,49-1011.00,7000
+3,"Computer, Automated Teller, and Office Machine Repairers",Y,49-2011.00,7010
+3,"Radio, Cellular, and Tower Equipment Installers and Repairers",Y,49-2021.00,7020
+3,"Telecommunications Equipment Installers and Repairers, Except Line Installers",Y,49-2022.00,7020
+3,Avionics Technicians,Y,49-2091.00,7030
+3,"Electric Motor, Power Tool, and Related Repairers",Y,49-2092.00,7040
+3,"Electrical and Electronics Installers and Repairers, Transportation Equipment",Y,49-2093.00,7050
+3,"Electrical and Electronics Repairers, Commercial and Industrial Equipment",Y,49-2094.00,7100
+3,"Electrical and Electronics Repairers, Powerhouse, Substation, and Relay",Y,49-2095.00,7100
+3,"Electronic Equipment Installers and Repairers, Motor Vehicles",Y,49-2096.00,7110
+3,Audiovisual Equipment Installers and Repairers,Y,49-2097.00,7120
+3,Security and Fire Alarm Systems Installers,Y,49-2098.00,7130
+3,Aircraft Mechanics and Service Technicians,Y,49-3011.00,7140
+2,Automotive Body and Related Repairers,Y,49-3021.00,7150
+2,Automotive Glass Installers and Repairers,Y,49-3022.00,7160
+3,Automotive Service Technicians and Mechanics,Y,49-3023.00,7200
+3,Bus and Truck Mechanics and Diesel Engine Specialists,Y,49-3031.00,7210
+3,Farm Equipment Mechanics and Service Technicians,Y,49-3041.00,7220
+3,"Mobile Heavy Equipment Mechanics, Except Engines",Y,49-3042.00,7220
+2,Rail Car Repairers,Y,49-3043.00,7220
+3,Motorboat Mechanics and Service Technicians,Y,49-3051.00,7240
+3,Motorcycle Mechanics,Y,49-3052.00,7240
+2,Outdoor Power Equipment and Other Small Engine Mechanics,Y,49-3053.00,7240
+2,Bicycle Repairers,Y,49-3091.00,7260
+2,Recreational Vehicle Service Technicians,Y,49-3092.00,7260
+2,Tire Repairers and Changers,Y,49-3093.00,7260
+2,Mechanical Door Repairers,Y,49-9011.00,7300
+3,"Control and Valve Installers and Repairers, Except Mechanical Door",Y,49-9012.00,7300
+3,"Heating, Air Conditioning, and Refrigeration Mechanics and Installers",Y,49-9021.00,7315
+2,Home Appliance Repairers,Y,49-9031.00,7320
+3,Industrial Machinery Mechanics,Y,49-9041.00,7330
+3,"Maintenance Workers, Machinery",Y,49-9043.00,7350
+2,Millwrights,Y,49-9044.00,7360
+2,"Refractory Materials Repairers, Except Brickmasons",Y,49-9045.00,7330
+2,Electrical Power-Line Installers and Repairers,Y,49-9051.00,7410
+2,Telecommunications Line Installers and Repairers,Y,49-9052.00,7420
+3,Camera and Photographic Equipment Repairers,Y,49-9061.00,7430
+3,Medical Equipment Repairers,Y,49-9062.00,7430
+3,Musical Instrument Repairers and Tuners,Y,49-9063.00,7430
+3,Watch and Clock Repairers,Y,49-9064.00,7430
+,"Precision Instrument and Equipment Repairers, All Other",,49-9069.00,7430
+3,"Maintenance and Repair Workers, General",Y,49-9071.00,7340
+3,Wind Turbine Service Technicians,Y,49-9081.00,7440
+2,"Coin, Vending, and Amusement Machine Servicers and Repairers",Y,49-9091.00,7510
+3,Commercial Divers,Y,49-9092.00,7520
+2,Locksmiths and Safe Repairers,Y,49-9094.00,7540
+2,Manufactured Building and Mobile Home Installers,Y,49-9095.00,7550
+2,Riggers,Y,49-9096.00,7560
+3,Signal and Track Switch Repairers,Y,49-9097.00,7640
+2,"Helpers--Installation, Maintenance, and Repair Workers",Y,49-9098.00,7610
+,"Installation, Maintenance, and Repair Workers, All Other",,49-9099.00,7640
+2,Geothermal Technicians,Y,49-9099.01,7640
+3,First-Line Supervisors of Production and Operating Workers,Y,51-1011.00,7700
+2,"Aircraft Structure, Surfaces, Rigging, and Systems Assemblers",Y,51-2011.00,7710
+2,"Coil Winders, Tapers, and Finishers",Y,51-2021.00,7720
+2,Electrical and Electronic Equipment Assemblers,Y,51-2022.00,7720
+2,Electromechanical Equipment Assemblers,Y,51-2023.00,7720
+2,Engine and Other Machine Assemblers,Y,51-2031.00,7730
+2,Structural Metal Fabricators and Fitters,Y,51-2041.00,7740
+2,Fiberglass Laminators and Fabricators,Y,51-2051.00,7750
+2,Timing Device Assemblers and Adjusters,Y,51-2061.00,7750
+2,Team Assemblers,Y,51-2092.00,7750
+,"Assemblers and Fabricators, All Other",,51-2099.00,7750
+2,Bakers,Y,51-3011.00,7800
+2,Butchers and Meat Cutters,Y,51-3021.00,7810
+1,"Meat, Poultry, and Fish Cutters and Trimmers",Y,51-3022.00,7810
+2,Slaughterers and Meat Packers,Y,51-3023.00,7810
+2,"Food and Tobacco Roasting, Baking, and Drying Machine Operators and Tenders",Y,51-3091.00,7830
+2,Food Batchmakers,Y,51-3092.00,7840
+2,Food Cooking Machine Operators and Tenders,Y,51-3093.00,7850
+,"Food Processing Workers, All Other",,51-3099.00,7855
+2,"Extruding and Drawing Machine Setters, Operators, and Tenders, Metal and Plastic",Y,51-4021.00,7925
+2,"Forging Machine Setters, Operators, and Tenders, Metal and Plastic",Y,51-4022.00,7925
+2,"Rolling Machine Setters, Operators, and Tenders, Metal and Plastic",Y,51-4023.00,7925
+2,"Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic",Y,51-4031.00,7950
+2,"Drilling and Boring Machine Tool Setters, Operators, and Tenders, Metal and Plastic",Y,51-4032.00,8025
+2,"Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic",Y,51-4033.00,8000
+2,"Lathe and Turning Machine Tool Setters, Operators, and Tenders, Metal and Plastic",Y,51-4034.00,8025
+2,"Milling and Planing Machine Setters, Operators, and Tenders, Metal and Plastic",Y,51-4035.00,8025
+3,Machinists,Y,51-4041.00,8030
+2,Metal-Refining Furnace Operators and Tenders,Y,51-4051.00,8040
+2,"Pourers and Casters, Metal",Y,51-4052.00,8040
+3,"Model Makers, Metal and Plastic",Y,51-4061.00,8060
+3,"Patternmakers, Metal and Plastic",Y,51-4062.00,8060
+2,Foundry Mold and Coremakers,Y,51-4071.00,8100
+2,"Molding, Coremaking, and Casting Machine Setters, Operators, and Tenders, Metal and Plastic",Y,51-4072.00,8100
+2,"Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic",Y,51-4081.00,8225
+3,Tool and Die Makers,Y,51-4111.00,8130
+2,"Welders, Cutters, Solderers, and Brazers",Y,51-4121.00,8140
+2,"Welding, Soldering, and Brazing Machine Setters, Operators, and Tenders",Y,51-4122.00,8140
+2,"Heat Treating Equipment Setters, Operators, and Tenders, Metal and Plastic",Y,51-4191.00,8225
+2,"Layout Workers, Metal and Plastic",Y,51-4192.00,8225
+2,"Plating Machine Setters, Operators, and Tenders, Metal and Plastic",Y,51-4193.00,8225
+2,"Tool Grinders, Filers, and Sharpeners",Y,51-4194.00,8225
+,"Metal Workers and Plastic Workers, All Other",,51-4199.00,8225
+3,Prepress Technicians and Workers,Y,51-5111.00,8250
+2,Printing Press Operators,Y,51-5112.00,8255
+2,Print Binding and Finishing Workers,Y,51-5113.00,8256
+1,Laundry and Dry-Cleaning Workers,Y,51-6011.00,8300
+1,"Pressers, Textile, Garment, and Related Materials",Y,51-6021.00,8310
+1,Sewing Machine Operators,Y,51-6031.00,8320
+2,Shoe and Leather Workers and Repairers,Y,51-6041.00,8335
+2,Shoe Machine Operators and Tenders,Y,51-6042.00,8335
+1,"Sewers, Hand",Y,51-6051.00,8350
+2,"Tailors, Dressmakers, and Custom Sewers",Y,51-6052.00,8350
+2,Textile Bleaching and Dyeing Machine Operators and Tenders,Y,51-6061.00,8365
+2,"Textile Cutting Machine Setters, Operators, and Tenders",Y,51-6062.00,8365
+2,"Textile Knitting and Weaving Machine Setters, Operators, and Tenders",Y,51-6063.00,8365
+2,"Textile Winding, Twisting, and Drawing Out Machine Setters, Operators, and Tenders",Y,51-6064.00,8365
+2,"Extruding and Forming Machine Setters, Operators, and Tenders, Synthetic and Glass Fibers",Y,51-6091.00,8465
+3,Fabric and Apparel Patternmakers,Y,51-6092.00,8465
+2,Upholsterers,Y,51-6093.00,8450
+,"Textile, Apparel, and Furnishings Workers, All Other",,51-6099.00,8465
+2,Cabinetmakers and Bench Carpenters,Y,51-7011.00,8500
+2,Furniture Finishers,Y,51-7021.00,8510
+3,"Model Makers, Wood",Y,51-7031.00,8555
+3,"Patternmakers, Wood",Y,51-7032.00,8555
+2,"Sawing Machine Setters, Operators, and Tenders, Wood",Y,51-7041.00,8530
+2,"Woodworking Machine Setters, Operators, and Tenders, Except Sawing",Y,51-7042.00,8540
+,"Woodworkers, All Other",,51-7099.00,8555
+3,Nuclear Power Reactor Operators,Y,51-8011.00,8600
+3,Power Distributors and Dispatchers,Y,51-8012.00,8600
+2,Power Plant Operators,Y,51-8013.00,8600
+2,Biomass Plant Technicians,Y,51-8013.03,8600
+3,Hydroelectric Plant Technicians,Y,51-8013.04,8600
+3,Stationary Engineers and Boiler Operators,Y,51-8021.00,8610
+3,Water and Wastewater Treatment Plant and System Operators,Y,51-8031.00,8620
+2,Chemical Plant and System Operators,Y,51-8091.00,8630
+2,Gas Plant Operators,Y,51-8092.00,8630
+2,"Petroleum Pump System Operators, Refinery Operators, and Gaugers",Y,51-8093.00,8630
+,"Plant and System Operators, All Other",,51-8099.00,
+2,Biofuels Processing Technicians,Y,51-8099.01,
+2,Chemical Equipment Operators and Tenders,Y,51-9011.00,8640
+2,"Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders",Y,51-9012.00,8640
+2,"Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders",Y,51-9021.00,8650
+2,"Grinding and Polishing Workers, Hand",Y,51-9022.00,8650
+2,"Mixing and Blending Machine Setters, Operators, and Tenders",Y,51-9023.00,8650
+1,"Cutters and Trimmers, Hand",Y,51-9031.00,8710
+2,"Cutting and Slicing Machine Setters, Operators, and Tenders",Y,51-9032.00,8710
+2,"Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders",Y,51-9041.00,8720
+2,"Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders",Y,51-9051.00,8730
+2,"Inspectors, Testers, Sorters, Samplers, and Weighers",Y,51-9061.00,8740
+3,Jewelers and Precious Stone and Metal Workers,Y,51-9071.00,8750
+3,Gem and Diamond Workers,Y,51-9071.06,8750
+2,Dental Laboratory Technicians,Y,51-9081.00,8760
+3,Medical Appliance Technicians,Y,51-9082.00,8760
+2,Ophthalmic Laboratory Technicians,Y,51-9083.00,8760
+2,Packaging and Filling Machine Operators and Tenders,Y,51-9111.00,8800
+1,"Painting, Coating, and Decorating Workers",Y,51-9123.00,8810
+2,"Coating, Painting, and Spraying Machine Setters, Operators, and Tenders",Y,51-9124.00,8810
+2,Semiconductor Processing Technicians,Y,51-9141.00,8990
+2,Photographic Process Workers and Processing Machine Operators,Y,51-9151.00,8830
+2,Computer Numerically Controlled Tool Operators,Y,51-9161.00,7905
+3,Computer Numerically Controlled Tool Programmers,Y,51-9162.00,7905
+2,Adhesive Bonding Machine Operators and Tenders,Y,51-9191.00,8850
+2,"Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders",Y,51-9192.00,8865
+2,Cooling and Freezing Equipment Operators and Tenders,Y,51-9193.00,8865
+2,Etchers and Engravers,Y,51-9194.00,8910
+2,"Molders, Shapers, and Casters, Except Metal and Plastic",Y,51-9195.00,8920
+2,"Stone Cutters and Carvers, Manufacturing",Y,51-9195.03,8920
+2,"Glass Blowers, Molders, Benders, and Finishers",Y,51-9195.04,8920
+3,"Potters, Manufacturing",Y,51-9195.05,8920
+2,"Paper Goods Machine Setters, Operators, and Tenders",Y,51-9196.00,8930
+2,Tire Builders,Y,51-9197.00,8940
+2,Helpers--Production Workers,Y,51-9198.00,8950
+,"Production Workers, All Other",,51-9199.00,8865
+2,Aircraft Cargo Handling Supervisors,Y,53-1041.00,9005
+2,"First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand",Y,53-1042.00,9005
+2,Recycling Coordinators,Y,53-1042.01,9005
+3,First-Line Supervisors of Material-Moving Machine and Vehicle Operators,Y,53-1043.00,9005
+3,First-Line Supervisors of Passenger Attendants,Y,53-1044.00,9005
+,"First-Line Supervisors of Transportation Workers, All Other",,53-1049.00,9005
+4,"Airline Pilots, Copilots, and Flight Engineers",Y,53-2011.00,9030
+3,Commercial Pilots,Y,53-2012.00,9030
+3,Air Traffic Controllers,Y,53-2021.00,9040
+3,Airfield Operations Specialists,Y,53-2022.00,9040
+2,Flight Attendants,Y,53-2031.00,9050
+2,"Ambulance Drivers and Attendants, Except Emergency Medical Technicians",Y,53-3011.00,9110
+2,Driver/Sales Workers,Y,53-3031.00,9130
+2,Heavy and Tractor-Trailer Truck Drivers,Y,53-3032.00,9130
+2,Light Truck Drivers,Y,53-3033.00,9130
+2,"Bus Drivers, School",Y,53-3051.00,9121
+2,"Bus Drivers, Transit and Intercity",Y,53-3052.00,9122
+2,Shuttle Drivers and Chauffeurs,Y,53-3053.00,9141
+2,Taxi Drivers,Y,53-3054.00,9142
+,"Motor Vehicle Operators, All Other",,53-3099.00,9150
+2,Locomotive Engineers,Y,53-4011.00,9210
+2,"Rail Yard Engineers, Dinkey Operators, and Hostlers",Y,53-4013.00,9210
+2,"Railroad Brake, Signal, and Switch Operators and Locomotive Firers",Y,53-4022.00,9265
+2,Railroad Conductors and Yardmasters,Y,53-4031.00,9240
+2,Subway and Streetcar Operators,Y,53-4041.00,9265
+,"Rail Transportation Workers, All Other",,53-4099.00,9265
+2,Sailors and Marine Oilers,Y,53-5011.00,9300
+3,"Captains, Mates, and Pilots of Water Vessels",Y,53-5021.00,9310
+2,Motorboat Operators,Y,53-5022.00,9310
+3,Ship Engineers,Y,53-5031.00,9330
+2,Bridge and Lock Tenders,Y,53-6011.00,9430
+2,Parking Attendants,Y,53-6021.00,9350
+2,Automotive and Watercraft Service Attendants,Y,53-6031.00,9365
+2,Aircraft Service Attendants,Y,53-6032.00,9365
+3,Traffic Technicians,Y,53-6041.00,9430
+4,Transportation Inspectors,Y,53-6051.00,9410
+3,Aviation Inspectors,Y,53-6051.01,9410
+2,"Transportation Vehicle, Equipment and Systems Inspectors, Except Aviation",Y,53-6051.07,9410
+2,Passenger Attendants,Y,53-6061.00,9415
+,"Transportation Workers, All Other",,53-6099.00,9430
+1,Conveyor Operators and Tenders,Y,53-7011.00,9570
+3,Crane and Tower Operators,Y,53-7021.00,9510
+2,Dredge Operators,Y,53-7031.00,9570
+2,Hoist and Winch Operators,Y,53-7041.00,9570
+2,Industrial Truck and Tractor Operators,Y,53-7051.00,9600
+2,Cleaners of Vehicles and Equipment,Y,53-7061.00,9610
+2,"Laborers and Freight, Stock, and Material Movers, Hand",Y,53-7062.00,9620
+2,Recycling and Reclamation Workers,Y,53-7062.04,9620
+2,Machine Feeders and Offbearers,Y,53-7063.00,9630
+2,"Packers and Packagers, Hand",Y,53-7064.00,9640
+2,Stockers and Order Fillers,Y,53-7065.00,9645
+2,Gas Compressor and Gas Pumping Station Operators,Y,53-7071.00,9650
+2,"Pump Operators, Except Wellhead Pumpers",Y,53-7072.00,9650
+2,Wellhead Pumpers,Y,53-7073.00,9650
+2,Refuse and Recyclable Material Collectors,Y,53-7081.00,9720
+2,"Tank Car, Truck, and Ship Loaders",Y,53-7121.00,9760
+,"Material Moving Workers, All Other",,53-7199.00,9760
+,Air Crew Officers,,55-1011.00,9800
+,Aircraft Launch and Recovery Officers,,55-1012.00,9800
+,Armored Assault Vehicle Officers,,55-1013.00,9800
+,Artillery and Missile Officers,,55-1014.00,9800
+,Command and Control Center Officers,,55-1015.00,9800
+,Infantry Officers,,55-1016.00,9800
+,Special Forces Officers,,55-1017.00,9800
+,"Military Officer Special and Tactical Operations Leaders, All Other",,55-1019.00,9800
+,First-Line Supervisors of Air Crew Members,,55-2011.00,9810
+,First-Line Supervisors of Weapons Specialists/Crew Members,,55-2012.00,9810
+,First-Line Supervisors of All Other Tactical Operations Specialists,,55-2013.00,9810
+,Air Crew Members,,55-3011.00,9825
+,Aircraft Launch and Recovery Specialists,,55-3012.00,9825
+,Armored Assault Vehicle Crew Members,,55-3013.00,9825
+,Artillery and Missile Crew Members,,55-3014.00,9825
+,Command and Control Center Specialists,,55-3015.00,9825
+,Infantry,,55-3016.00,9825
+,Special Forces,,55-3018.00,9825
+,"Military Enlisted Tactical Operations and Air/Weapons Specialists and Crew Members, All Other",,55-3019.00,9825
