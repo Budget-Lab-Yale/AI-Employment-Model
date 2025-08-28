@@ -4,13 +4,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import datetime
 
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 from parsing    import build_linked_dataset
-from calc       import calc_block, do_benchmark, build_std_output
 from calc_other import build_other_output
 from calc_dd    import build_mismatch
+from calc_edu_dd import build_mis_edu
 
 stamp = datetime.datetime.now().strftime('%Y%m%d%H%M')
-#stamp = '202506231821'
+stamp = '202508281033'
 out_path = os.path.join("/gpfs/gibbs/project/sarin/jmk263/Repositories/AI-Employment-Model/output", stamp)
 
 if not os.path.exists(out_path):
@@ -26,44 +29,104 @@ ID = '2025050211'
 start_period = "1995.1"
 end_period = "2002.12"
 
-#build_linked_dataset(ID, start_period, end_period
+#build_linked_dataset(ID, start_period, end_period)
 
 start_period = "2015.1"
 end_period = "2019.12"
 
 #build_linked_dataset(ID, start_period, end_period)
 
-ID = '2025071609'
+ID = '2025081116'
 
-start_period = "2021.1"
-end_period   = "2025.5"
+start_period = "2022.11"
+end_period   = "2025.7"
 
 # Takes raw monthly CPS and combines it with AI exposure data
 
-ID = '2025080614'
-start_period = "2000.1"
-end_period   = "2025.6"
+#ID = '2025080614'
+#start_period = "2000.1"
+#end_period   = "2025.6"
 
-build_linked_dataset(ID, start_period, end_period, occ_code="OCC2010", simple = True)
-bark
+#build_linked_dataset(ID, start_period, end_period, occ_code="OCC2010", simple = True)
+
+# build dissimilarity data by historical time periods
 params = pandas.DataFrame({
-    'ID':    ['2025050812', '2025050211', '2025050211', ID],
+    'ID':    ['2025081810', '2025081810', '2025081810', ID],
     'start': ["1983.1","1996.1", "2016.1", start_period],
     'end':   ["1987.12", "2002.12", "2019.12", end_period],
     'label': ["Computers", "Internet", "Control", "AI"]
     }
 )
-
 deltas = pandas.DataFrame(columns=['MONTH', "dissimilarity"])
 for i in range(0, len(params)):
-    deltas = pandas.concat([deltas, build_mismatch(params.loc[i, 'ID'], params.loc[i, 'start'], params.loc[i, 'end'], 3).assign(
-        label = params.loc[i, 'label']
+    deltas = pandas.concat([deltas, build_mismatch(params.loc[i, 'ID'], params.loc[i, 'start'], params.loc[i, 'end'], freq=12, pre_trend=12).assign(
+    label = params.loc[i, 'label']
     )])
+
 deltas.pivot(
     index   = 'months_gone',
     columns = 'label',
     values  = 'dissimilarity'
 ).reset_index().to_csv(os.path.join(out_path, "dissimilarity.csv"), index = False)
+
+
+# build dissimilarity data by recent time periods
+params = pandas.DataFrame({
+    'ID':    [ID, ID, ID, ID],
+    'start': ["2021.01","2022.01", "2022.11", "2022.07"],
+    'end':   [end_period, end_period, end_period, end_period],
+    'label': ["Jan21", "Jan22", "AI (Nov22)", "Jul22"]
+    }
+)
+deltas = pandas.DataFrame(columns=['MONTH', "dissimilarity"])
+for i in range(0, len(params)):
+    deltas = pandas.concat([deltas, build_mismatch(params.loc[i, 'ID'], params.loc[i, 'start'], params.loc[i, 'end'], freq=12).assign(
+        label = params.loc[i, 'label']
+    )])
+
+deltas.pivot(
+    index   = 'months_gone',
+    columns = 'label',
+    values  = 'dissimilarity'
+).reset_index().to_csv(os.path.join(out_path, "recent.csv"), index = False)
+
+# by industry analyses
+recent = pandas.DataFrame({
+    'name':['recent', 'information', 'financial_activities', 'professional_and_business_services'],
+    'industry': ['','6470.6860','6870.7260','7270.7790']
+})
+
+for j in range(0, len(recent)):
+    print(recent.loc[j,'industry'])
+    deltas = pandas.DataFrame(columns=['MONTH', "dissimilarity"])
+    for i in range(0, len(params)):
+        deltas = pandas.concat([deltas, build_mismatch(params.loc[i, 'ID'], params.loc[i, 'start'], params.loc[i, 'end'], 12, '', recent.loc[j,'industry']).assign(
+            label = params.loc[i, 'label']
+        )])
+    name = recent.loc[j, 'name'] + ".csv"
+    deltas.pivot(
+        index   = 'months_gone',
+        columns = 'label',
+        values  = 'dissimilarity'
+    ).reset_index().to_csv(os.path.join(out_path, name), index = False)
+
+params2 = pandas.DataFrame({
+    'label':['all', 'information', 'financial_activities', 'professional_and_business_services'],
+    'industry': ['','6470.6860','6870.7260','7270.7790']
+})
+deltas = pandas.DataFrame(columns=['MONTH', "dissimilarity"])
+for i in range(0, len(params2)):
+        deltas = pandas.concat([deltas, build_mismatch(ID, start_period, end_period, 12, '', params2.loc[i,'industry']).assign(
+            label = params2.loc[i, 'label']
+        )])
+deltas.pivot(
+    index   = 'months_gone',
+    columns = 'label',
+    values  = 'dissimilarity'
+).reset_index().to_csv(os.path.join(out_path, 'industry.csv'), index = False)
+
+# by recency of graduation
+recent_grads = build_mis_edu(ID, start_period, end_period, 3).to_csv(os.path.join(out_path, "recent_grads_dissimilarity.csv"), index = False)
 
 # Builds graphs depicting headline employment metrics
 print("Alpha")

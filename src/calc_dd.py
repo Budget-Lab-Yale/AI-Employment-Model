@@ -14,7 +14,7 @@ from parsing import month_helper
 from datetime import date
 from calc_other import calc_avg2
 
-def build_mismatch(ID: str, start: str, end: str, freq = 1, occ_subset = '', ind_subset = ''):
+def build_mismatch(ID: str, start: str, end: str, freq = 1, occ_subset = '', ind_subset = '', pre_trend = 0):
 
     # Parse start and end dates into iterable format
     start = start.split('.')
@@ -59,6 +59,28 @@ def build_mismatch(ID: str, start: str, end: str, freq = 1, occ_subset = '', ind
             mn_dex = mn_dex % 12
             yr_dex += 1
 
+
+    # calculate pre trend months based on input
+    yr_dex = int(start[0])
+    mn_dex = int(start[1])
+    for i in range(pre_trend):
+        
+        # backwards from start
+        mn_dex -= 1
+        if mn_dex < 1:
+            mn_dex = 12
+            yr_dex -= 1
+
+        # calc prior mismatch
+        month = str(yr_dex) + str(mn_dex).zfill(2)
+        this_month = calc_mis_month(ID, month, freq, occ_subset, ind_subset, months[["OCC", "base"]])
+        months = months.merge(
+            this_month[["OCC", month]],
+            how = 'outer',
+            on  = 'OCC' 
+        )
+
+
     # With all months calculated, we tidy up the dataframe a bit and aggregate across occupations
     # The 'sum(axis=0)' sums each column to get the month's dissimilarity
     # On the 'loc[1:,:]' line, switch the '1' to a '2' if you want to drop the base month with dissimilarity = -
@@ -67,34 +89,38 @@ def build_mismatch(ID: str, start: str, end: str, freq = 1, occ_subset = '', ind
             "index": "MONTH",
             0: "dissimilarity"
         }
-    ).loc[1:,:]
-    
-    deltas = pandas.Series()
-    deltas = data     
-        
-    deltas = deltas.assign(MONTH = lambda x: to_datetime(x["MONTH"], format='%Y%m'))
+    ).loc[1:,:].sort_values('MONTH')
 
-    # This graph is mainly for testing and is not useful for an actual write up
-    locator = mdates.YearLocator()
-    fmt     = mdates.DateFormatter("%Y")
-
-    sns.lineplot(
-        data = deltas,
-        x = "MONTH",
-        y = "dissimilarity"
-    )
-    plt.ylim((0,10))
-    X = plt.gca().xaxis
-    X.set_major_locator(locator)
-    X.set_major_formatter(fmt)
-    plt.xlabel("Time")
-    plt.show()
-    
-    # Prep for output
-    # Months_gone is a useful metric for graphing multiple timespans on the same chart, with it as the x-axis
-    deltas = deltas.reset_index()
-    deltas["months_gone"] = deltas.index +1
+    deltas = data.reset_index()
+    deltas["months_gone"] = deltas.index - pre_trend
     deltas = deltas.drop(['index', "MONTH"], axis=1)
+
+    # deltas = pandas.Series()
+    # deltas = data     
+        
+    # deltas = deltas.assign(MONTH = lambda x: to_datetime(x["MONTH"], format='%Y%m'))
+
+    # # This graph is mainly for testing and is not useful for an actual write up
+    # locator = mdates.YearLocator()
+    # fmt     = mdates.DateFormatter("%Y")
+
+    # sns.lineplot(
+    #     data = deltas,
+    #     x = "MONTH",
+    #     y = "dissimilarity"
+    # )
+    # plt.ylim((0,10))
+    # X = plt.gca().xaxis
+    # X.set_major_locator(locator)
+    # X.set_major_formatter(fmt)
+    # plt.xlabel("Time")
+    # plt.show()
+    
+    # # Prep for output
+    # # Months_gone is a useful metric for graphing multiple timespans on the same chart, with it as the x-axis
+    # deltas = deltas.reset_index()
+    # deltas["months_gone"] = deltas.index
+    # deltas = deltas.drop(['index', "MONTH"], axis=1)
     
     return deltas
 
