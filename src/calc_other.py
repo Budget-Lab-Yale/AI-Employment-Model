@@ -17,7 +17,9 @@ def build_other_output(ID: str, start: str, end: str, out_path: str, metric = "m
     locator = mdates.YearLocator()
     fmt     = mdates.DateFormatter("%Y")
     this_dir = os.path.join(out_path, metric)
-    os.makedirs(this_dir)
+    
+    if not os.path.exists(this_dir):
+        os.makedirs(this_dir)
     
     # Here we minimize number of I/O operations rather than reducing frame complexity
     # As such, subfunctions are significantly more complex, but it runs (a bit) faster
@@ -42,6 +44,23 @@ def build_other_output(ID: str, start: str, end: str, out_path: str, metric = "m
     full_month = full_month[full_month["OCC"]!="0000"]
     check = full_month.groupby("OCC").agg({metric:'mean', 'filtered':'mean', 'total':'mean'}).reset_index()
     check['not_filtered'] = (check['total'] - check['filtered']) / check['total']
+    
+    check = check.assign(
+        quadrant = lambda x: numpy.where(
+            (x[metric] > .5), numpy.where(x['not_filtered'] > .5, "Q1", "Q4"), numpy.where(x['not_filtered'] > .5, "Q2", "Q3")
+        )
+    ).merge(
+        read_csv(os.path.join(os.path.dirname(__file__), "../resources/crosswalk.csv")).dropna(subset = 'cps_code').assign(
+            major_code = lambda x: x["Code"].str[:2].astype(int),
+            OCC = lambda x: x['cps_code'].astype(int).astype(str).str.zfill(4)
+            )[["major_code", "OCC"]],
+        on = "OCC",
+        how = 'left'
+    ).merge(
+        read_csv(os.path.join(os.path.dirname(__file__), "../resources/soc_major.csv")),
+        on = "major_code",
+        how = 'left'
+    )
     check.to_csv(os.path.join(this_dir, "openai_vs_anthropic.csv"), index = False)
 
 
@@ -148,6 +167,8 @@ def get_month(ID: str, this_month: str, groups, e_vars, metric: str):
     full_month = full_month[full_month["AGE"] > 15]
     full_month = full_month[full_month["OCC"]!="0000"]
     
+    full_month["na_wt"] = full_month["automation"].isna() * full_month["WTFINL"]
+
     for g in groups:  
         # First, we define a local aggregation function to get weighted percents (where we also normalize the usage metrics)
         def get_wp(var, total, weights):
@@ -257,7 +278,8 @@ def get_month2(ID: str, this_month: str, groups, metric: str):
     # Good universe for what we're trying to measure here
     full_month = full_month[full_month["AGE"] > 15]
     full_month = full_month[full_month["OCC"]!="0000"]
-    
+
+
     for g in groups:  
 
         # First, we define a local aggregation function to get weighted percents (where we also normalize the usage metrics)
