@@ -1,5 +1,8 @@
 /resources/exposure.csv
 /resources/brookings_benchmark.csv
 /src/scratch.py
+/src/calc_dd_jmk.py
+/src/calc_other_jmk.py
+/src/CPS_API.py
 /cps/
 /output/
