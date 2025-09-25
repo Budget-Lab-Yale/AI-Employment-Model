@@ -127,7 +127,6 @@ def collapse_exposure(rsc_path: str):
     # See https://arxiv.org/pdf/2303.10130 for details
 
     exposure_raw = read_csv(os.path.join(rsc_path, "exposure.csv")).assign(
-        Occupation_Code = lambda x: x["O*NET-SOC Code"].str[:7],
         Task = lambda x: x["Task"].str.lower().str.strip()
     )
 
@@ -142,7 +141,7 @@ def collapse_exposure(rsc_path: str):
     onet_tasks["Task"] = onet_tasks["Task"].str.lower().str.strip()
     onet_tasks["n_occurrences"] = onet_tasks.groupby("Task")["Title"].transform("nunique")
     onet_tasks["n_occurrences"] = onet_tasks["n_occurrences"].fillna(1)
-
+    
     old_new = read_csv(os.path.join(rsc_path, "2010_to_2019_Crosswalk.csv"))
     
     onet_tasks = onet_tasks.merge(
@@ -167,7 +166,7 @@ def collapse_exposure(rsc_path: str):
         how = 'left', 
         on = 'Task ID'
     ).assign(
-        t_wgt = lambda x: numpy.where(x['t_wgt'].isna(), 1, x['t_wgt'])
+        t_wgt = lambda x: numpy.where(x['t_wgt'].isna(), .75, x['t_wgt'])
     )
     
     exposure_raw[exposure_columns] = exposure_raw[exposure_columns].apply(lambda x: x * exposure_raw["t_wgt"])
@@ -183,7 +182,6 @@ def collapse_exposure(rsc_path: str):
             temp,
             how = 'left',
             on = "O*NET-SOC Code"
-            
         )
     
     ### ANTHROPIC USAGE DATA ###
@@ -191,7 +189,7 @@ def collapse_exposure(rsc_path: str):
     # March Release:  automation_vs_augmentation_by_task.csv
     # August Release: automation_vs_augmentation_by_task_v2.csv
     # August (Claude) Release: automation_vs_augmentation_by_task_v2_claude.csv
-    usage_data_source = "automation_vs_augmentation_by_task_v2.csv"
+    usage_data_source = "automation_vs_augmentation_by_task.csv"
 
     # Percent of Conversations is included in the August releases (pre-processing)
     if usage_data_source == "automation_vs_augmentation_by_task.csv":
@@ -212,9 +210,6 @@ def collapse_exposure(rsc_path: str):
     usage_raw  = read_csv(os.path.join(rsc_path, usage_data_source))
     usage_raw["task_name"] = usage_raw["task_name"].str.lower().str.strip()
 
-    # Another frame of ONET tasks and occupation codes
-    #onet_tasks = onet_tasks[["O*NET-SOC Code", "Task", 't_wgt']]
-    print(usage_raw[~usage_raw["task_name"].isin(onet_tasks["Task"])])
     # Attach usage to the task descriptions/codes, maintaining the tasks rather than the usage 
     
     onet_tasks = usage_raw.merge(
@@ -223,9 +218,7 @@ def collapse_exposure(rsc_path: str):
         left_on = "task_name",
         right_on = "Task"
     )
-    #print(onet_tasks[onet_tasks["O*NET-SOC Code"].isna()])
-    #onet_tasks.to_csv("benchmark.csv")
-    #ribbit
+    
     # Sum types of usage into either augmentation or automation for a TASK
     onet_tasks = onet_tasks.assign(
         augmentation = lambda x: x["validation"] + x["task_iteration"] + x["learning"],
@@ -258,7 +251,6 @@ def collapse_exposure(rsc_path: str):
         on = "O*NET-SOC Code"
     )
     
-    
     socs = read_csv(os.path.join(rsc_path, "crosswalk.csv")).dropna(subset = 'cps_code').assign(
         # Processing values to facilitate easier merging later on
         cps_code  = lambda x: x['cps_code'].astype(int).astype(str).str.zfill(4),
@@ -277,7 +269,7 @@ def collapse_exposure(rsc_path: str):
         left_on = "Code",
         right_on = "O*NET-SOC Code"
     )
-
+    
     external = external.groupby('no_detail').agg({
         'cps_code': lambda x: x.mode()[0] if len(x.mode()) > 0 else np.nan,
         'mean_rating_human_alpha': 'mean',
@@ -293,7 +285,7 @@ def collapse_exposure(rsc_path: str):
         'automation': 'mean',
         'filtered': 'mean',
         'total': 'mean'
-    }).reset_index().merge( #assign(#cps_code = lambda x: x['cps_code'].astype(int).astype(str).str.zfill(4))
+    }).reset_index().merge(
         oes,
         how = 'left',
         left_on = 'no_detail',
@@ -371,7 +363,7 @@ def collapse_exposure(rsc_path: str):
         left_on = "cps_code",
         right_on = "cps_code"
     )
-    
+
     external.to_csv(os.path.join(rsc_path, "full_map.csv"))
     
     return external
