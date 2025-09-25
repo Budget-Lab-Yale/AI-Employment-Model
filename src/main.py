@@ -122,6 +122,7 @@ deltas.pivot(
 
 
 # By recency of graduation
+# The following start date of November 2020 allows us to calculate the 3 month trailing average. A programmatic fix for this is forthcoming.
 recent_grads = build_mis_edu(ID, "2020.11", end_period, 3).to_csv(os.path.join(out_path, "recent_grads_dissimilarity.csv"), index = False)
 recent_grads = build_mis_edu("2025092202", "2014.11", end_period, 3).to_csv(os.path.join(out_path, "recent_grads_dissimilarity2.csv"), index = False)
 
@@ -137,7 +138,7 @@ build_other_output('2025091811_august_claude', start_period, end_period, out_pat
 
 # build_other_output(ID, start_period, end_period, out_path, metric = 'gpt4_automation', freq = 3)
 # print("Gamma")
-# build_other_output(ID, start_period, end_period, out_path, metric = 'gpt4_rubric1_gamma', freq = 1)
+# build_other_output(ID, start_period, end_period, out_path, metric = 'gpt4_rubric1_gamma', freq = 3)
 
 
 # all industries back to 2004
