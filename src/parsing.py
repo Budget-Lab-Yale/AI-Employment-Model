@@ -1,8 +1,6 @@
 import pandas
 import numpy
 import os
-import sys
-import psutil
 import gc
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -15,26 +13,9 @@ def build_linked_dataset(ID: str, start: str, end: str, occ_code = "OCC", simple
     # Path to non-CPS data
     rsc_path = os.path.join(os.path.dirname(__file__), "..", "resources")
 
-    # Attaches disparate data together. This data is not time sensitive, though some of it requires qualification
-    # Processes AI exposure data
+    # Attaches disparate data together.
     external = collapse_exposure(rsc_path)
     
-    
-    # BENCHMARKING TODO
-    """ 
-    print(external[external['pct_of_convs'] > 0])
-    breaks = external[external['pct_of_convs'] > 0]['pct_of_convs'].quantile([.2, .4, .6, .8])
-    
-    external = external.assign(
-        exposure_quintile = lambda x: pandas.cut(
-            x["pct_of_convs"],
-            [-float('inf'), 0, breaks, float('inf')],
-            right = False,
-            include_lowest = True,
-            labels = ["Q0","Q1", "Q2", "Q3", "Q4", "Q5"]
-        )
-    )
-    """
     cps_path = os.path.join(os.path.dirname(__file__), "..", "cps")
 
     if not os.path.exists(os.path.join(cps_path, "processed", ID)):
@@ -120,10 +101,13 @@ def collapse_exposure(rsc_path: str):
     soc_major = read_csv(os.path.join(rsc_path, "soc_major.csv"))
     
     # Crosswalk between SOC codes and CPS codes
+    oes = read_csv(os.path.join(rsc_path, 'national_M2024_dl.csv'))[['OCC_CODE', 'TOT_EMP', 'OCC_TITLE', 'O_GROUP']]
+    
     crosswalk = read_csv(os.path.join(rsc_path, "crosswalk.csv")).dropna(subset = 'cps_code').assign(
         # Processing values to facilitate easier merging later on
         cps_code  = lambda x: x['cps_code'].astype(int).astype(str).str.zfill(4),
-        major_code = lambda x: x["Code"].str[:2].astype(int)
+        major_code = lambda x: x["Code"].str[:2].astype(int),
+        no_detail = lambda x: x["Code"].str[:7]
     )
     
     crosswalk = crosswalk.merge(
@@ -141,92 +125,107 @@ def collapse_exposure(rsc_path: str):
     # The OpenAI exposure data, containing:
     # O*NET SOC code, the associated occupation in text, a task, and its various exposure metrics coded in range(0,1)
     # See https://arxiv.org/pdf/2303.10130 for details
+
     exposure_raw = read_csv(os.path.join(rsc_path, "exposure.csv")).assign(
         Task = lambda x: x["Task"].str.lower().str.strip()
     )
+
     exposure_columns = ["mean_rating_human_alpha", "mean_rating_human_beta", "mean_rating_human_gamma", "gpt4_rubric1_alpha", \
         "gpt4_rubric1_beta", "gpt4_rubric1_gamma", "gpt4_rubric2_beta", "gpt4_automation"]
+    
 
     # Core tasks get 1 non core get .5
-    onet_tasks = read_csv(os.path.join(rsc_path, 'onet_task_statements.csv'))[["O*NET-SOC Code", "Task", "Task ID", "Task Type", "Title"]].assign(
+    onet_tasks = read_csv(os.path.join(rsc_path, 'onet_task_statements_old.csv'))[["O*NET-SOC Code", "Task", "Task ID", "Task Type", "Title"]].assign(
         t_wgt = lambda x: numpy.where(x["Task Type"]=="Core", 1, .5)
     ).drop(["Task Type"], axis=1)
-
-    exposure_raw = exposure_raw.merge(
-        onet_tasks[["Task ID", "t_wgt"]],
+    onet_tasks["Task"] = onet_tasks["Task"].str.lower().str.strip()
+    onet_tasks["n_occurrences"] = onet_tasks.groupby("Task")["Title"].transform("nunique")
+    onet_tasks["n_occurrences"] = onet_tasks["n_occurrences"].fillna(1)
+    
+    old_new = read_csv(os.path.join(rsc_path, "2010_to_2019_Crosswalk.csv"))
+    
+    onet_tasks = onet_tasks.merge(
+        old_new,
         how = 'left',
+        left_on ='O*NET-SOC Code',
+        right_on = 'O*NET-SOC 2010 Code'
+    ).drop(["O*NET-SOC Code", 'Title'], axis=1).rename(
+        columns = {
+            'O*NET-SOC 2019 Code':"O*NET-SOC Code",
+            "O*NET-SOC 2019 Title": "Title"
+        }
+    ) 
+
+    # Better weight mapping for exposure
+    onet_v2 = read_csv(os.path.join(rsc_path, "onet_tasks_v2.csv")).assign(
+        t_wgt = lambda x: numpy.where(x["Task Type"]=="Core", 1, .5)
+    )
+    
+    exposure_raw = exposure_raw.merge(
+        onet_v2[["Task ID", "t_wgt"]],
+        how = 'left', 
         on = 'Task ID'
-    )    
+    ).assign(
+        t_wgt = lambda x: numpy.where(x['t_wgt'].isna(), .75, x['t_wgt'])
+    )
     
     exposure_raw[exposure_columns] = exposure_raw[exposure_columns].apply(lambda x: x * exposure_raw["t_wgt"])
-        
+    
     # Iterate over metrics and collapse tasks' exposure to a single value for the 
-    for m in exposure_columns: 
-        temp = DataFrame()
-        temp[m] = exposure_raw.groupby("O*NET-SOC Code")[m].sum() / exposure_raw.groupby("O*NET-SOC Code")["t_wgt"].sum()
-        
-        # Reset index and attach collapsed metric to our output frame SOC code-wise
-        temp = temp.reset_index()        
+    for m in exposure_columns:       
+        mask = exposure_raw[m].notna()
+        num = exposure_raw.loc[mask].groupby("O*NET-SOC Code")[m].sum()
+        den = exposure_raw.loc[mask].groupby("O*NET-SOC Code")["t_wgt"].sum()
+        temp = (num / den).rename(m).reset_index()
+
         collapsed = collapsed.merge(
             temp,
             how = 'left',
             on = "O*NET-SOC Code"
         )
-
+    
     ### ANTHROPIC USAGE DATA ###
 
-    # PCT OF CONVS
-    onet_tasks["task_normalized"] = onet_tasks["Task"].str.lower().str.strip()
-    onet_tasks["n_occurrences"] = onet_tasks.groupby("task_normalized")["Title"].transform("nunique")
-    # Anthropic data for a task's percent of all Claude queries
-    task_pct = read_csv(os.path.join(rsc_path, "onet_task_mappings.csv"))
-    
-    task_pct = task_pct.merge(
-        onet_tasks,
-        left_on="task_name",
-        right_on="task_normalized",
-        how='left'
-    ).assign(
-        pct_of_convs = lambda x: 100 * (x["pct"] / x["n_occurrences"]) / (x["pct"] / x["n_occurrences"]).sum()
-    )
-    
-    task_pct = task_pct.groupby("O*NET-SOC Code").agg({
-        "pct_of_convs": "sum"
-    })
-    
-    collapsed = collapsed.merge(
-        task_pct,
-        how = 'left',
-        on = "O*NET-SOC Code"
-    )
+    # March Release:  automation_vs_augmentation_by_task.csv
+    # August Release: automation_vs_augmentation_by_task_v2.csv
+    # August (Claude) Release: automation_vs_augmentation_by_task_v2_claude.csv
+    usage_data_source = "automation_vs_augmentation_by_task.csv"
+
+    # Percent of Conversations is included in the August releases (pre-processing)
+    if usage_data_source == "automation_vs_augmentation_by_task.csv":
+        # Anthropic data for a task's percent of all Claude queries
+        
+        task_pct = read_csv(os.path.join(rsc_path, "task_pct_v2.csv"))
+        
+        onet_tasks = onet_tasks.merge(
+            task_pct,
+            left_on = "Task",
+            right_on = "task_name",
+            how = 'left'
+        )
     
     # Usage metrics for a tasks' propensity to have Claude augment or automate a task. Usage sums to 1 for a task. 
     # If a task has filtered = 1, then the task is neither automated nor augmented with Claude (i.e. "apply caulk, sealants, or other agents to installed surfaces.")
     # A filtered task is present in the data because someone with an occupation who does that task used Claude, but the conversations did not pertain to that specific task
-    usage_raw  = read_csv(os.path.join(rsc_path, "automation_vs_augmentation_by_task.csv"))
+    usage_raw  = read_csv(os.path.join(rsc_path, usage_data_source))
+    usage_raw["task_name"] = usage_raw["task_name"].str.lower().str.strip()
 
-    # Another frame of ONET tasks and occupation codes
-    #onet_tasks = read_csv(os.path.join(rsc_path, 'onet_task_statements.csv'))[["O*NET-SOC Code", "Task"]]
-    onet_tasks["Task"] = onet_tasks["Task"].str.lower().str.strip()
-    onet_tasks = onet_tasks[["O*NET-SOC Code", "Task", 't_wgt']]
-
-    # Might be useful depending on future paramaterization, not in the current one
-    #usage_raw = usage_raw[usage_raw["filtered"] != 1]
-
-    # Attach usage to the task descriptions/codes, maintaining the tasks rather than the usage
-    onet_tasks = onet_tasks.merge(
-        usage_raw,
+    # Attach usage to the task descriptions/codes, maintaining the tasks rather than the usage 
+    
+    onet_tasks = usage_raw.merge(
+        onet_tasks,
         how = 'left',
-        left_on = "Task",
-        right_on = "task_name"
-    ).drop(["task_name"], axis = 1).dropna(axis=0)
-
+        left_on = "task_name",
+        right_on = "Task"
+    )
+    
     # Sum types of usage into either augmentation or automation for a TASK
     onet_tasks = onet_tasks.assign(
         augmentation = lambda x: x["validation"] + x["task_iteration"] + x["learning"],
-        automation   = lambda x: x["directive"] + x["feedback_loop"]
-    ).drop(["validation", "task_iteration", "learning", "directive", "feedback_loop"], axis = 1)
-
+        automation   = lambda x: x["directive"] + x["feedback_loop"],
+        pct_of_convs = lambda x: 100 * (x["pct"] / x["n_occurrences"]) / (x["pct"] / x["n_occurrences"]).sum()
+    ).drop(["validation", "task_iteration", "learning", "directive", "feedback_loop", "pct"], axis = 1)
+    
     # Aggregate task sub-sums of usage to OCCUPATION level
     # Note that we don't calculate percentages or normalize during this pre-processing step. As such, values are typically range(0,n(tasks_per_occ))
     # We keep them un-normalized so that we can do normalization only once we aggregate microdata individuals into groups during processing
@@ -235,27 +234,44 @@ def collapse_exposure(rsc_path: str):
     temp = onet_tasks.groupby("O*NET-SOC Code").agg({
         'augmentation': 'sum',
         'automation':   'sum',
-        'filtered' :    'sum'
+        'filtered' :    'sum',
+        'pct_of_convs': 'sum'
     }).reset_index().assign(
-        total = lambda x: x['augmentation'] + x['automation'] + x['filtered'],
+        total        = lambda x: x['augmentation'] + x['automation'] + x['filtered'],
         augmentation = lambda x: x['augmentation'],
-        automation = lambda x: x['automation'],
-        filtered = lambda x: x['filtered']
+        automation   = lambda x: x['automation'],
+        filtered     = lambda x: x['filtered'],
+        pct_of_convs = lambda x: x['pct_of_convs']
     )
+    
     # Finally attach all OCCUPATION level metrics of exposure and usage
     collapsed = collapsed.merge(
         temp,
         how = "left",
         on = "O*NET-SOC Code"
     )
-
+    
+    socs = read_csv(os.path.join(rsc_path, "crosswalk.csv")).dropna(subset = 'cps_code').assign(
+        # Processing values to facilitate easier merging later on
+        cps_code  = lambda x: x['cps_code'].astype(int).astype(str).str.zfill(4),
+        major_code = lambda x: x["Code"].str[:2].astype(int),
+    )
+    majors = read_csv(os.path.join(rsc_path, "soc_major.csv"))
+    socs = socs.merge(
+        majors,
+        how = "left",
+        on = "major_code"
+    )[["cps_code", "major_occ"]].drop_duplicates() 
+    
     external = crosswalk.merge(
         collapsed,
         how = "left",
         left_on = "Code",
         right_on = "O*NET-SOC Code"
-    ).groupby(
-        'cps_code').agg({
+    )
+    
+    external = external.groupby('no_detail').agg({
+        'cps_code': lambda x: x.mode()[0] if len(x.mode()) > 0 else np.nan,
         'mean_rating_human_alpha': 'mean',
         'mean_rating_human_beta': 'mean',
         'mean_rating_human_gamma': 'mean',
@@ -269,10 +285,88 @@ def collapse_exposure(rsc_path: str):
         'automation': 'mean',
         'filtered': 'mean',
         'total': 'mean'
-    })
+    }).reset_index().merge(
+        oes,
+        how = 'left',
+        left_on = 'no_detail',
+        right_on = 'OCC_CODE'
+    )
+    
+    def get_wp(var, total, weights):
+            # Weighted sum of the metric at hand
+            w_sum = (var * weights).sum()
+            # Total weight (magnified by n(tasks) for each occupation in the usage data)
+            w_total = (weights * total * ~var.isna()).sum()
 
+            return (w_sum / w_total) if w_total > 0 else pandas.NA 
+
+    external = external.groupby('cps_code').agg(
+        mean_rating_human_alpha = pandas.NamedAgg(
+            column = 'mean_rating_human_alpha',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        mean_rating_human_beta = pandas.NamedAgg(
+            column = 'mean_rating_human_beta',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        mean_rating_human_gamma = pandas.NamedAgg(
+            column = 'mean_rating_human_gamma',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        gpt4_rubric1_alpha = pandas.NamedAgg(
+            column = 'gpt4_rubric1_alpha',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        gpt4_rubric1_beta = pandas.NamedAgg(
+            column = 'gpt4_rubric1_beta',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        gpt4_rubric1_gamma = pandas.NamedAgg(
+            column = 'gpt4_rubric1_gamma',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        gpt4_rubric2_beta = pandas.NamedAgg(
+            column = 'gpt4_rubric2_beta',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        gpt4_automation = pandas.NamedAgg(
+            column = 'gpt4_automation',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        pct_of_convs = pandas.NamedAgg(
+            column = 'pct_of_convs',
+            aggfunc = lambda x: x.sum()
+        ),
+        augmentation = pandas.NamedAgg(
+            column = 'augmentation',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        automation = pandas.NamedAgg(
+            column = 'automation',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        total = pandas.NamedAgg(
+            column = 'total',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        filtered = pandas.NamedAgg(
+            column = 'filtered',
+            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
+        ),
+        employment_count = pandas.NamedAgg(
+            column = "TOT_EMP",
+            aggfunc = lambda x: x.sum()
+        )
+    ).reset_index().merge(
+        socs,
+        how = "left",
+        left_on = "cps_code",
+        right_on = "cps_code"
+    )
+
+    external.to_csv(os.path.join(rsc_path, "full_map.csv"))
+    
     return external
-
 
 def month_helper(month: int):
     # Just a helper function to do one-line month iteration
