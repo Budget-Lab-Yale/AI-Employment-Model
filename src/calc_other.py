@@ -16,7 +16,7 @@ from datetime import date
 def build_other_output(ID: str, start: str, end: str, out_path: str, metric = "mean_rating_human_beta", freq = 3):
     locator = mdates.YearLocator()
     fmt     = mdates.DateFormatter("%Y")
-    this_dir = os.path.join(out_path, metric)
+    this_dir = os.path.join(out_path, metric + ID)
     os.makedirs(this_dir)
     
     # Here we minimize number of I/O operations rather than reducing frame complexity
@@ -36,9 +36,9 @@ def build_other_output(ID: str, start: str, end: str, out_path: str, metric = "m
 
     full_month = full_month[full_month["AGE"] > 15]
     full_month = full_month[full_month["OCC"]!="0000"]
-    check = full_month.groupby("OCC").agg({metric:'mean', 'filtered':'mean', 'total':'mean', 'pct_of_convs':'mean'}).reset_index()
+    check = full_month.groupby("OCC").agg({metric:'mean', 'automation':'mean', 'augmentation':'mean', 'total':'mean', 'pct_of_convs':'mean'}).reset_index()
 
-    check['not_filtered'] = check['total'] - check['filtered']
+    check['not_filtered'] = check['automation'] + check['augmentation']
     check['not_filtered_pct'] = check['not_filtered'] / check['total']
 
     socs = read_csv("/gpfs/gibbs/project/sarin/jmk263/Repositories/AI-Employment-Model/resources/crosswalk.csv").dropna(subset = 'cps_code').assign(
@@ -317,11 +317,6 @@ def get_month(ID: str, this_month: str, groups, e_vars, metric: str):
                 column = 'augmentation',
                 aggfunc = lambda x, t=month['total'], w=month['WTFINL']: get_wp(x, t.loc[x.index], w.loc[x.index])
             ),
-            # Percent of conversations where task is filtered (make sure you know what the filtering is TODO)
-            filtered = pandas.NamedAgg(
-                column = 'filtered',
-                aggfunc = lambda x, t=month['total'], w=month['WTFINL']: get_wp(x, t.loc[x.index], w.loc[x.index])
-            ),
 
             # percent of occupations that are automated/augmented
             percent_automated = pandas.NamedAgg( 
@@ -336,7 +331,7 @@ def get_month(ID: str, this_month: str, groups, e_vars, metric: str):
         ).reset_index().rename(columns = {g: "group_val"}).assign(group = g)
         
         # Just get the vars we need
-        temp = temp[['group', 'group_val', 'tasks_exposed_pct', 'percent_lowest_exposed', 'percent_middle_exposed', 'percent_highest_exposed', 'percent_mildly_exposed', 'percent_moderately_exposed', 'percent_highly_exposed', 'automation', 'augmentation', 'filtered', 'percent_automated', 'percent_augmented']]
+        temp = temp[['group', 'group_val', 'tasks_exposed_pct', 'percent_lowest_exposed', 'percent_middle_exposed', 'percent_highest_exposed', 'percent_mildly_exposed', 'percent_moderately_exposed', 'percent_highly_exposed', 'automation', 'augmentation', 'percent_automated', 'percent_augmented']]
         
         if "out" not in locals():
             out = temp
@@ -387,9 +382,9 @@ def get_month2(ID: str, this_month: str, groups, metric: str):
         mildly_exposed = lambda x: numpy.where(numpy.logical_and(x[metric] > 0, x[metric] < .4), 1, 0),
         moderately_exposed = lambda x: numpy.where(numpy.logical_and(x[metric] >= .4, x[metric] < .8), 1, 0),
         highly_exposed = lambda x: numpy.where(x[metric] >= .8, 1, 0),
-        lowest_exposed = lambda x: numpy.where(numpy.logical_and(x[metric] > 0, x[metric] <= 0.26801243), 1, 0),
-        middle_exposed = lambda x: numpy.where(numpy.logical_and(x[metric] > 0.2680124, x[metric] <= 0.5333915), 1, 0),
-        highest_exposed = lambda x: numpy.where(x[metric] > 0.5333915, 1, 0),
+        lowest_exposed = lambda x: numpy.where(numpy.logical_and(x[metric] > 0, x[metric] <= 0.2687269), 1, 0),
+        middle_exposed = lambda x: numpy.where(numpy.logical_and(x[metric] > 0.2687269, x[metric] <= 0.5307864), 1, 0),
+        highest_exposed = lambda x: numpy.where(x[metric] > 0.5307864, 1, 0),
     )
     
     # Want "working age" adults and people in CPS OCC universe

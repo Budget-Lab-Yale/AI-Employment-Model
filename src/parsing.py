@@ -8,13 +8,13 @@ import pyarrow.parquet as pq
 from pandas import read_csv, DataFrame
 from ipumspy import readers, ddi
 
-def build_linked_dataset(ID: str, start: str, end: str, occ_code = "OCC", simple = False):
+def build_linked_dataset(ID: str, start: str, end: str, occ_code = "OCC", simple = False, fill_missing_tasks = True):
     
     # Path to non-CPS data
     rsc_path = os.path.join(os.path.dirname(__file__), "..", "resources")
 
     # Attaches disparate data together.
-    external = collapse_exposure(rsc_path)
+    external = collapse_exposure(rsc_path, fill_missing_tasks)
     
     cps_path = os.path.join(os.path.dirname(__file__), "..", "cps")
 
@@ -95,7 +95,7 @@ def build_linked_dataset(ID: str, start: str, end: str, occ_code = "OCC", simple
     
     return
 
-def collapse_exposure(rsc_path: str):
+def collapse_exposure(rsc_path: str, fill_missing_tasks: bool):
 
     # SOC major group codes and descriptions
     soc_major = read_csv(os.path.join(rsc_path, "soc_major.csv"))
@@ -190,6 +190,7 @@ def collapse_exposure(rsc_path: str):
     # August Release: automation_vs_augmentation_by_task_v2.csv
     # August (Claude) Release: automation_vs_augmentation_by_task_v2_claude.csv
     usage_data_source = "automation_vs_augmentation_by_task.csv"
+    print(usage_data_source)
 
     # Percent of Conversations is included in the August releases (pre-processing)
     if usage_data_source == "automation_vs_augmentation_by_task.csv":
@@ -205,20 +206,46 @@ def collapse_exposure(rsc_path: str):
         )
     
     # Usage metrics for a tasks' propensity to have Claude augment or automate a task. Usage sums to 1 for a task. 
-    # If a task has filtered = 1, then the task is neither automated nor augmented with Claude (i.e. "apply caulk, sealants, or other agents to installed surfaces.")
-    # A filtered task is present in the data because someone with an occupation who does that task used Claude, but the conversations did not pertain to that specific task
+    # As per convention in Anthropic's reports, we drop filtered and renormalize the remaining categories.
     usage_raw  = read_csv(os.path.join(rsc_path, usage_data_source))
     usage_raw["task_name"] = usage_raw["task_name"].str.lower().str.strip()
 
-    # Attach usage to the task descriptions/codes, maintaining the tasks rather than the usage 
+    # Normalize the distribution for usage tasks after dropping "filtered" conversations
+    usage_raw = usage_raw.drop('filtered', axis = 1)
+    cols = ['validation', 'task_iteration', 'learning', 'feedback_loop', 'directive']
+    new_total = usage_raw[cols].sum(axis=1)
+    for col in cols:
+        usage_raw[col] = usage_raw[col] / new_total
     
-    onet_tasks = usage_raw.merge(
-        onet_tasks,
-        how = 'left',
-        left_on = "task_name",
-        right_on = "Task"
-    )
+
+    # Attach usage to the task descriptions/codes
+    # It's unclear which is the better choice methodologically regarding filling missing tasks. 
     
+    if fill_missing_tasks:
+        # Doing it this way implies that since the tasks aren't in the data, they aren't being used.
+        # This provides fuller data but assumes that tasks that are similar to ones that are in the data are not comparable.
+        onet_tasks = onet_tasks.merge(
+            usage_raw,
+            how = 'left',
+            left_on = "Task",
+            right_on = "task_name"
+        ).assign(
+            validation     = lambda x: x["validation"].fillna(0),
+            task_iteration = lambda x: x["task_iteration"].fillna(0),
+            learning       = lambda x: x["learning"].fillna(0),
+            directive      = lambda x: x["directive"].fillna(0),
+            feedback_loop  = lambda x: x["feedback_loop"].fillna(0),
+            pct            = lambda x: x["pct"].fillna(0)
+        )
+    
+    else:
+        onet_tasks = usage_raw.merge(
+            onet_tasks,
+            how = 'left',
+            left_on = "task_name",
+            right_on = "Task"
+        )
+
     # Sum types of usage into either augmentation or automation for a TASK
     onet_tasks = onet_tasks.assign(
         augmentation = lambda x: x["validation"] + x["task_iteration"] + x["learning"],
@@ -229,21 +256,29 @@ def collapse_exposure(rsc_path: str):
     # Aggregate task sub-sums of usage to OCCUPATION level
     # Note that we don't calculate percentages or normalize during this pre-processing step. As such, values are typically range(0,n(tasks_per_occ))
     # We keep them un-normalized so that we can do normalization only once we aggregate microdata individuals into groups during processing
-    onet_tasks[["augmentation", "automation", "filtered"]] = onet_tasks[["augmentation", "automation", "filtered"]].apply(lambda x: x * onet_tasks['t_wgt'])
+    # If we are filling missing tasks, then every task should be counted and we fill totals with 1
+    # Otherwise, it's simply the sum of the normalized automation and augmentation metrics
+    onet_tasks['total'] = 1 if fill_missing_tasks else onet_tasks['automation'] + onet_tasks['augmentation']
+    onet_tasks[["augmentation", "automation", "total"]] = onet_tasks[["augmentation", "automation", 'total']].apply(lambda x: x * onet_tasks['t_wgt'])
 
     temp = onet_tasks.groupby("O*NET-SOC Code").agg({
         'augmentation': 'sum',
         'automation':   'sum',
-        'filtered' :    'sum',
+        'total' :    'sum',
         'pct_of_convs': 'sum'
     }).reset_index().assign(
-        total        = lambda x: x['augmentation'] + x['automation'] + x['filtered'],
         augmentation = lambda x: x['augmentation'],
         automation   = lambda x: x['automation'],
-        filtered     = lambda x: x['filtered'],
+        total = lambda x: x['total'],
         pct_of_convs = lambda x: x['pct_of_convs']
     )
     
+    # Sets tasks with 0s in augmentation, automation, and total to NaN so that they are ignored in future calculations.
+    # This is only important for the method in which we do not fill tasks. In that configuration, 0s across the board (except for total) is a valid entry
+    # In this configuration, it would only serve to confound the future aggregations
+    if not fill_missing_tasks:
+        temp[['augmentation','automation','total']] = temp[['augmentation','automation','total']].mask(temp[['augmentation','automation','total']].eq(0).all(axis=1))
+
     # Finally attach all OCCUPATION level metrics of exposure and usage
     collapsed = collapsed.merge(
         temp,
@@ -283,7 +318,6 @@ def collapse_exposure(rsc_path: str):
         'pct_of_convs': 'sum',
         'augmentation': 'mean',
         'automation': 'mean',
-        'filtered': 'mean',
         'total': 'mean'
     }).reset_index().merge(
         oes,
@@ -347,10 +381,6 @@ def collapse_exposure(rsc_path: str):
         ),
         total = pandas.NamedAgg(
             column = 'total',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        filtered = pandas.NamedAgg(
-            column = 'filtered',
             aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
         ),
         employment_count = pandas.NamedAgg(
