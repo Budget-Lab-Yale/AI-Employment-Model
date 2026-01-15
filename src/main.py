@@ -19,7 +19,7 @@ if not os.path.exists(os.path.join(out_path, "output", stamp)):
 
 start_period = "2021.12"
 end_period   = "2025.11"
-"""
+
 print("Dissimilarity by Period")
 # Build dissimilarity data by historical time periods
 params = pandas.DataFrame({
@@ -100,7 +100,7 @@ build_mis_ind("Industry", start_period, end_period, 12).to_csv(os.path.join(out_
 recent_grads = build_mis_edu("dissimilarity/Industry", "2020.11", end_period, 3).to_csv(os.path.join(out_path, "output", stamp, "recent_grads_dissimilarity.csv"), index = False)
 recent_grads = build_mis_edu("dissimilarity/Industry", "2014.11", end_period, 3).to_csv(os.path.join(out_path, "output", stamp, "recent_grads_dissimilarity2.csv"), index = False)
 recent_grads = build_mis_edu("input/august", "2020.11", end_period, 3).to_csv(os.path.join(out_path, "output", stamp, "recent_grads_dissimilarity3.csv"), index = False)
-"""
+
 # Builds exposure/usage metrics over time
 start_period = '2022.9'
 
