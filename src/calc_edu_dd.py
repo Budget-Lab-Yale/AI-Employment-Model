@@ -118,23 +118,29 @@ def calc_mis_edu_month(ID: str, this_month: str, freq: int, occ_subset: str):
 
 
 def get_month_edu_dd(ID: str, this_month: str, occ_subset: str):
+    if this_month == "202510":
+        sep = get_month_edu_dd(ID, "202509", occ_subset)
+        nov = get_month_edu_dd(ID, "202511", occ_subset)
+        out = pandas.concat([sep, nov], ignore_index = True).groupby(["OCC","recent_grad"]).agg({"WTFINL": 'mean'}).reset_index()
 
-    full_month = pandas.read_parquet(
-        os.path.join(os.path.dirname(__file__), "../cps/processed", ID, "cps_" + this_month + ".parquet"), engine = 'pyarrow'
-    )
-    
-    # subset for college grads and define age groups
-    full_month = full_month[full_month["OCC"]!="0000"]
-    full_month = full_month[full_month["EDUC"]>=91]
-    full_month = full_month[full_month["AGE"].between(20,34)]
-    full_month['recent_grad'] = numpy.where(full_month['AGE']<25, 'young', 'old')
-    count      = full_month["WTFINL"].sum()
 
-    out = full_month.groupby(["OCC","recent_grad"]).agg({"WTFINL": 'sum'}).reset_index()
+    else:
+        full_month = pandas.read_parquet(
+            os.path.join("/gpfs/gibbs/project/sarin/shared/model_data/AI-Employment-Model", ID, "cps_" + this_month + ".parquet"), engine = 'pyarrow'
+        )
+        
+        # subset for college grads and define age groups
+        full_month = full_month[full_month["OCC"]!="0000"]
+        full_month = full_month[full_month["EDUC"]>=91]
+        full_month = full_month[full_month["AGE"].between(20,34)]
+        full_month['recent_grad'] = numpy.where(full_month['AGE']<25, 'young', 'old')
+        count      = full_month["WTFINL"].sum()
 
-    # subset by occupation
-    if occ_subset:
-        occ_subset = occ_subset.split('.')
-        out = out[(pandas.to_numeric(out['OCC']) >= int(occ_subset[0])) & (pandas.to_numeric(out['OCC']) <= int(occ_subset[1]))].reset_index()
+        out = full_month.groupby(["OCC","recent_grad"]).agg({"WTFINL": 'sum'}).reset_index()
+
+        # subset by occupation
+        if occ_subset:
+            occ_subset = occ_subset.split('.')
+            out = out[(pandas.to_numeric(out['OCC']) >= int(occ_subset[0])) & (pandas.to_numeric(out['OCC']) <= int(occ_subset[1]))].reset_index()
 
     return out

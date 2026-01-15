@@ -170,27 +170,32 @@ def calc_mis_month(ID: str, this_month: str, freq: int, occ_subset: str, ind_sub
 def get_month_dd(ID: str, this_month: str, occ_subset: str, ind_subset: str):
     # This function simply reads in data, filters it to the population we want (working adults), 
     # and sums weights for each occupation
+    if this_month == "202510":
+        sep = get_month_dd(ID, "202509", occ_subset, ind_subset)
+        nov = get_month_dd(ID, "202511", occ_subset, ind_subset)
+        out = pandas.concat([sep, nov], ignore_index = True).groupby("OCC").agg({"WTFINL": 'mean'}).reset_index()
 
-    full_month = pandas.read_parquet(
-        os.path.join(os.path.dirname(__file__), "../cps/processed", ID, "cps_" + this_month + ".parquet"), engine = 'pyarrow'
-    )
+    else:
+        full_month = pandas.read_parquet(
+            os.path.join("/gpfs/gibbs/project/sarin/shared/model_data/AI-Employment-Model/dissimilarity", ID, "cps_" + this_month + ".parquet"), engine = 'pyarrow'
+        )
+        
+        full_month = full_month[full_month["AGE"] > 15]
+        full_month = full_month[full_month["OCC"]!="0000"]
+        count      = full_month["WTFINL"].sum()
+
+        # subests the data based on industry codes
+        if ind_subset:
+            ind_subset = ind_subset.split('.')
+            first      = int(ind_subset[0])
+            last       = int(ind_subset[1])
+            full_month = full_month[(pandas.to_numeric(full_month['IND']) >= first) & (pandas.to_numeric(full_month['IND']) <= last)].reset_index()
+
+        out = full_month.groupby("OCC").agg({"WTFINL": 'sum'}).reset_index()
     
-    full_month = full_month[full_month["AGE"] > 15]
-    full_month = full_month[full_month["OCC"]!="0000"]
-    count      = full_month["WTFINL"].sum()
-
-    # subests the data based on industry codes
-    if ind_subset:
-        ind_subset = ind_subset.split('.')
-        first      = int(ind_subset[0])
-        last       = int(ind_subset[1])
-        full_month = full_month[(pandas.to_numeric(full_month['IND']) >= first) & (pandas.to_numeric(full_month['IND']) <= last)].reset_index()
-
-    out = full_month.groupby("OCC").agg({"WTFINL": 'sum'}).reset_index()
-    
-    # subsets the data based on occpuation codes
-    if occ_subset:
-        occ_subset = occ_subset.split('.')
-        out        = out[(pandas.to_numeric(out['OCC']) >= int(occ_subset[0])) & (pandas.to_numeric(out['OCC']) <= int(occ_subset[1]))].reset_index()
+        # subsets the data based on occpuation codes
+        if occ_subset:
+            occ_subset = occ_subset.split('.')
+            out        = out[(pandas.to_numeric(out['OCC']) >= int(occ_subset[0])) & (pandas.to_numeric(out['OCC']) <= int(occ_subset[1]))].reset_index()
 
     return out

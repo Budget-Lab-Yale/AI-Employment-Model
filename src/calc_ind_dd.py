@@ -107,32 +107,38 @@ def calc_mis_ind_month(ID: str, this_month: str, freq: int, base = None):
 
 def get_month_ind_dd(ID: str, this_month: str):
 
-    full_month = pandas.read_parquet(
-        os.path.join(os.path.dirname(__file__), "../cps/processed", ID, "cps_" + this_month + ".parquet"), engine = 'pyarrow'
-    )
-    
-    full_month = full_month[full_month["AGE"] > 15]
-    full_month = full_month[full_month["OCC"]!="0000"]
+    if this_month == "202510":
+        sep = get_month_ind_dd(ID, "202509")
+        nov = get_month_ind_dd(ID, "202511")
+        out = pandas.concat([sep, nov], ignore_index = True).groupby(["OCC","Industry"]).agg({"WTFINL": 'mean'}).reset_index()
 
-    full_month["IND"] = pandas.to_numeric(full_month['IND'])
-    full_month['Industry'] = numpy.select(
-        [
-            full_month['IND'].ge(100) & full_month['IND'].le(560),
-            full_month['IND'].ge(770) & full_month['IND'].le(1060),
-            full_month['IND'].ge(1070) & full_month['IND'].le(4060),
-            (full_month['IND'].ge(4070) & full_month['IND'].le(6390)) | (full_month['IND'].ge(570) & full_month['IND'].le(760)),
-            full_month['IND'].ge(6470) & full_month['IND'].le(6860),
-            full_month['IND'].ge(6870) & full_month['IND'].le(7260),
-            full_month['IND'].ge(7270) & full_month['IND'].le(7790),
-            full_month['IND'].ge(7860) & full_month['IND'].le(8470),
-            full_month['IND'].ge(8560) & full_month['IND'].le(8690),
-            full_month['IND'].ge(8770) & full_month['IND'].le(9290)
-        ],
-        ['Natural Resources and Mining', 'Construction', 'Manufacturing', 'Trade, Transportation, and Utilities', 'Information', 'Financial Activities', 'Professional and Business Services', 'Education and Health Services', 'Leisure and Hospitality', 'Other Services'],
-        default=''
-    )
-    full_month = full_month[full_month['Industry']!='']
-    
-    out = full_month.groupby(["OCC","Industry"]).agg({"WTFINL": 'sum'}).reset_index()
+    else:
+        full_month = pandas.read_parquet(
+            os.path.join("/gpfs/gibbs/project/sarin/shared/model_data/AI-Employment-Model/dissimilarity", ID, "cps_" + this_month + ".parquet"), engine = 'pyarrow'
+        )
+        
+        full_month = full_month[full_month["AGE"] > 15]
+        full_month = full_month[full_month["OCC"]!="0000"]
+
+        full_month["IND"] = pandas.to_numeric(full_month['IND'])
+        full_month['Industry'] = numpy.select(
+            [
+                full_month['IND'].ge(100) & full_month['IND'].le(560),
+                full_month['IND'].ge(770) & full_month['IND'].le(1060),
+                full_month['IND'].ge(1070) & full_month['IND'].le(4060),
+                (full_month['IND'].ge(4070) & full_month['IND'].le(6390)) | (full_month['IND'].ge(570) & full_month['IND'].le(760)),
+                full_month['IND'].ge(6470) & full_month['IND'].le(6860),
+                full_month['IND'].ge(6870) & full_month['IND'].le(7260),
+                full_month['IND'].ge(7270) & full_month['IND'].le(7790),
+                full_month['IND'].ge(7860) & full_month['IND'].le(8470),
+                full_month['IND'].ge(8560) & full_month['IND'].le(8690),
+                full_month['IND'].ge(8770) & full_month['IND'].le(9290)
+            ],
+            ['Natural Resources and Mining', 'Construction', 'Manufacturing', 'Trade, Transportation, and Utilities', 'Information', 'Financial Activities', 'Professional and Business Services', 'Education and Health Services', 'Leisure and Hospitality', 'Other Services'],
+            default=''
+        )
+        full_month = full_month[full_month['Industry']!='']
+        
+        out = full_month.groupby(["OCC","Industry"]).agg({"WTFINL": 'sum'}).reset_index()
 
     return out
