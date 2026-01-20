@@ -10,7 +10,7 @@ from calc_edu_dd import build_mis_edu
 from calc_ind_dd import build_mis_ind
 
 stamp = datetime.datetime.now().strftime('%Y%m%d%H%M')
-stamp = "202601121426"
+stamp = "202601201257"
 out_path = os.path.join("/gpfs/gibbs/project/sarin/shared/model_data/AI-Employment-Model")
 #out_path = os.path.join("/gpfs/gibbs/project/sarin/shared/model_data/AI-Employment-Model/output", stamp)
 
@@ -18,7 +18,7 @@ if not os.path.exists(os.path.join(out_path, "output", stamp)):
     os.makedirs(os.path.join(out_path, "output", stamp))
 
 start_period = "2021.12"
-end_period   = "2025.11"
+end_period   = "2025.12"
 
 print("Dissimilarity by Period")
 # Build dissimilarity data by historical time periods
@@ -91,22 +91,22 @@ deltas.pivot(
 #ID = '2025092202'
 start_period = "2003.1"
 
-end_period   = "2025.11"
+end_period   = "2025.12"
 
 build_mis_ind("Industry", start_period, end_period, 12).to_csv(os.path.join(out_path, "output", stamp, 'every.csv'), index = False) 
 
 # By recency of graduation
 # The following start date of November 2020 allows us to calculate the 3 month trailing average. A programmatic fix for this is forthcoming.
-recent_grads = build_mis_edu("dissimilarity/Industry", "2020.11", end_period, 3).to_csv(os.path.join(out_path, "output", stamp, "recent_grads_dissimilarity.csv"), index = False)
-recent_grads = build_mis_edu("dissimilarity/Industry", "2014.11", end_period, 3).to_csv(os.path.join(out_path, "output", stamp, "recent_grads_dissimilarity2.csv"), index = False)
-recent_grads = build_mis_edu("input/august", "2020.11", end_period, 3).to_csv(os.path.join(out_path, "output", stamp, "recent_grads_dissimilarity3.csv"), index = False)
+recent_grads = build_mis_edu("dissimilarity/Industry", "2020.11", end_period, 3).to_csv(os.path.join(out_path, "output", stamp, "recent_grads_dissimilarity_22_25.csv"), index = False)
+recent_grads = build_mis_edu("dissimilarity/Industry", "2014.11", end_period, 3).to_csv(os.path.join(out_path, "output", stamp, "recent_grads_dissimilarity_15_25.csv"), index = False)
+recent_grads = build_mis_edu("input/august", "2020.11", end_period, 3).to_csv(os.path.join(out_path, "output", stamp, "recent_grads_dissimilarity_lone.csv"), index = False)
 
 # Builds exposure/usage metrics over time
 start_period = '2022.9'
 
 write_path = os.path.join(out_path, "output", stamp, 'gpt4_rubric1_beta')
 print("Beta")
-for m in ["march", "march_fm", "august_claude", "august_claude_fm", "august", "august_fm"]:
+for m in ["march", "march_fm", "august_claude", "august_claude_fm", "august", "august_fm", "november", "november_fm"]:
   if not os.path.exists(write_path):
     os.makedirs(write_path)
   print(f"Building output for: {m}")

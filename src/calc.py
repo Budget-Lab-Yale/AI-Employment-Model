@@ -216,26 +216,3 @@ def get_month(ID: str, this_month: str, group: str, metric: str, filter_group: s
         month = month.rename(columns = {0: "tasks_exposed_pct"})
     
     return month
-
-def do_benchmark(metric: str):
-
-    # This was important early, don't worry about it now
-    cps = pandas.read_parquet(
-        os.path.join(os.path.dirname(__file__), "../cps/processed/benchmark/cps_benchmark.parquet"), engine = 'pyarrow'
-    )
-
-    bench = read_csv(os.path.join(os.path.dirname(__file__), "../resources/brookings_benchmark.csv"))
-
-    major = cps.groupby("major_occ").apply(lambda x: numpy.sum(x[metric] * x["ASECWT"])) * 100 / cps.groupby("major_occ")["ASECWT"].sum()
-    
-    major = major.to_frame().reset_index().rename(columns = {0: "tasks_exposed_pct"}).sort_values(by = "tasks_exposed_pct", ascending = False).merge(
-        bench,
-        how = 'left',
-        on = 'major_occ'
-    ).assign(
-        gap = lambda x: x["tasks_exposed_pct"] - x["brookings"]
-    )
-
-    sns.barplot(major, x = 'gap', y = 'major_occ', hue = 'major_occ', legend = False)
-
-    return

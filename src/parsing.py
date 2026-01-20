@@ -59,7 +59,7 @@ def build_linked_dataset(ID: str, start: str, end: str, out_path: str, build_map
     end   = end.split('.')
 
     #for m in ["march", "march_fm", "august_claude", "august_claude_fm", "august", "august_fm"]:
-    for m in ["march", "august_claude", "august"]:
+    for m in ["march", "august_claude", "august", "november_claude", "november"]:
         for fm in [False, True]:
             map_paths = {}
             #print(f"Building dataset for: {m}")
@@ -108,6 +108,8 @@ def build_linked_dataset(ID: str, start: str, end: str, out_path: str, build_map
                 )
                 # Write out data as a smaller .parquet file. We don't need to look at the micro outside of these scripts so this make I/0 WAY faster
                 for key in map_paths:
+                    if not os.path.exists(map_paths[key]):
+                        os.makedirs(map_paths[key])
                     this_path = os.path.join(map_paths[key], "cps_" + stamp  + ".parquet")
                     if not os.path.exists(this_path):
                         pq.write_table(pa.Table.from_pandas(linked), this_path, compression='snappy')
@@ -219,13 +221,20 @@ def collapse_exposure(rsc_path: str, samp: str, fill_missing_tasks: bool):
     # March Release:  automation_vs_augmentation_by_task.csv
     # August Release: automation_vs_augmentation_by_task_v2.csv
     # August (Claude) Release: automation_vs_augmentation_by_task_v2_claude.csv
+    # November Release: automation_vs_augmentation_by_task_v3.csv
+    # November (Claude) Release: automation_vs_augmentation_by_task_v3_claude.csv
     if samp == "march":
         usage_data_source = "automation_vs_augmentation_by_task.csv"
     elif samp == "august":
         usage_data_source = "automation_vs_augmentation_by_task_v2.csv"
-    else:
+    elif samp == "august_claude":
         usage_data_source = "automation_vs_augmentation_by_task_v2_claude.csv"
-    
+    elif samp == "november":
+        usage_data_source = "automation_vs_augmentation_by_task_v3.csv"
+    else:
+        usage_data_source = "automation_vs_augmentation_by_task_v3_claude.csv"
+
+
     # Percent of Conversations is included in the August releases (pre-processing)
     if usage_data_source == "automation_vs_augmentation_by_task.csv":
         # Anthropic data for a task's percent of all Claude queries
