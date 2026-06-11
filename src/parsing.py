@@ -18,7 +18,7 @@ def build_linked_dataset(ID: str, start: str, end: str, out_path: str, build_map
         external = collapse_exposure(rsc_path, fill_missing_tasks)
  
     #cps_path = os.path.join(os.path.dirname(__file__), "..", "cps")
-    cps_path = os.path.join("/gpfs/gibbs/project/sarin/shared/raw_data/CPS-Monthly", ID)
+    cps_path = os.path.join("/nfs/roberts/project/pi_nrs36/shared/raw_data/CPS-Monthly", ID)
 
     #if not os.path.exists(os.path.join(cps_path, "processed", ID)):
     #    os.makedirs(os.path.join(cps_path, "processed", ID))
@@ -59,8 +59,12 @@ def build_linked_dataset(ID: str, start: str, end: str, out_path: str, build_map
     end   = end.split('.')
 
     #for m in ["march", "march_fm", "august_claude", "august_claude_fm", "august", "august_fm"]:
-    for m in ["march", "august_claude", "august", "november_claude", "november"]:
+    #for m in ["march", "august_claude", "august", "november_claude", "november", "feb26", "job_exposure"]:
+    for m in ["feb26"]:
         for fm in [False, True]:
+            # Only need to run job_exposure once so we skip one of the fm iterations
+            if m == "job_exposure" and fm:
+                continue
             map_paths = {}
             #print(f"Building dataset for: {m}")
             if occ_code == "OCC2010":
@@ -78,10 +82,6 @@ def build_linked_dataset(ID: str, start: str, end: str, out_path: str, build_map
 
             external = collapse_exposure(rsc_path, m, fm)
 
-            #external = read_csv(os.path.join(rsc_path, "full_map_" + m + ".csv")).assign(
-            #    cps_code = lambda x: x["cps_code"].astype(str).str.zfill(4)
-            #)
-            print(map_paths)
             # Year and month iterators
             yr_dex = int(start[0])
             mn_dex = int(start[1])
@@ -223,6 +223,7 @@ def collapse_exposure(rsc_path: str, samp: str, fill_missing_tasks: bool):
     # August (Claude) Release: automation_vs_augmentation_by_task_v2_claude.csv
     # November Release: automation_vs_augmentation_by_task_v3.csv
     # November (Claude) Release: automation_vs_augmentation_by_task_v3_claude.csv
+    # February Release: job_exposure.csv
     if samp == "march":
         usage_data_source = "automation_vs_augmentation_by_task.csv"
     elif samp == "august":
@@ -231,103 +232,117 @@ def collapse_exposure(rsc_path: str, samp: str, fill_missing_tasks: bool):
         usage_data_source = "automation_vs_augmentation_by_task_v2_claude.csv"
     elif samp == "november":
         usage_data_source = "automation_vs_augmentation_by_task_v3.csv"
-    else:
+    elif samp == "november_claude":
         usage_data_source = "automation_vs_augmentation_by_task_v3_claude.csv"
-
-
-    # Percent of Conversations is included in the August releases (pre-processing)
-    if usage_data_source == "automation_vs_augmentation_by_task.csv":
-        # Anthropic data for a task's percent of all Claude queries
-        
-        task_pct = read_csv(os.path.join(rsc_path, "task_pct_v2.csv"))
-        
-        onet_tasks = onet_tasks.merge(
-            task_pct,
-            left_on = "Task",
-            right_on = "task_name",
-            how = 'left'
-        )
-    
-    # Usage metrics for a tasks' propensity to have Claude augment or automate a task. Usage sums to 1 for a task. 
-    # As per convention in Anthropic's reports, we drop filtered and renormalize the remaining categories.
-    usage_raw  = read_csv(os.path.join(rsc_path, usage_data_source))
-    usage_raw["task_name"] = usage_raw["task_name"].str.lower().str.strip()
-
-    # Normalize the distribution for usage tasks after dropping "filtered" conversations
-    usage_raw = usage_raw.drop('filtered', axis = 1)
-    cols = ['validation', 'task_iteration', 'learning', 'feedback_loop', 'directive']
-    new_total = usage_raw[cols].sum(axis=1)
-    for col in cols:
-        usage_raw[col] = usage_raw[col] / new_total
-    
-
-    # Attach usage to the task descriptions/codes
-    # It's unclear which is the better choice methodologically regarding filling missing tasks. 
-    
-    if fill_missing_tasks:
-        # Doing it this way implies that since the tasks aren't in the data, they aren't being used.
-        # This provides fuller data but assumes that tasks that are similar to ones that are in the data are not comparable.
-        onet_tasks = onet_tasks.merge(
-            usage_raw,
-            how = 'left',
-            left_on = "Task",
-            right_on = "task_name"
-        ).assign(
-            validation     = lambda x: x["validation"].fillna(0),
-            task_iteration = lambda x: x["task_iteration"].fillna(0),
-            learning       = lambda x: x["learning"].fillna(0),
-            directive      = lambda x: x["directive"].fillna(0),
-            feedback_loop  = lambda x: x["feedback_loop"].fillna(0),
-            pct            = lambda x: x["pct"].fillna(0)
-        )
-    
+    elif samp == "feb26":
+        usage_data_source = "automation_vs_augmentation_by_task_v4.csv"
+    elif samp == "feb26_claude":
+        usage_data_source = "automation_vs_augmentation_by_task_v4_claude.csv"
     else:
-        onet_tasks = usage_raw.merge(
-            onet_tasks,
-            how = 'left',
-            left_on = "task_name",
-            right_on = "Task"
+        usage_data_source = "job_exposure.csv"
+
+
+    # Job Exposure from February 2026 already exists at the SOC level, so there is no need to process it from task level
+    if usage_data_source == "job_exposure.csv":
+        # observed_exposure is keyed on no_detail (7-char SOC, e.g. "11-1011")
+        # It is joined onto external at the no_detail stage, so we only load it here
+        # and defer the merge until the external groupby step below.
+        job_exposure = read_csv(os.path.join(rsc_path, usage_data_source))[["occ_code", "observed_exposure"]]
+
+    else:
+        # Percent of Conversations is included in the August releases (pre-processing)
+        if usage_data_source == "automation_vs_augmentation_by_task.csv":
+            # Anthropic data for a task's percent of all Claude queries
+            
+            task_pct = read_csv(os.path.join(rsc_path, "task_pct_v2.csv"))
+            
+            onet_tasks = onet_tasks.merge(
+                task_pct,
+                left_on = "Task",
+                right_on = "task_name",
+                how = 'left'
+            )
+        
+        # Usage metrics for a tasks' propensity to have Claude augment or automate a task. Usage sums to 1 for a task. 
+        # As per convention in Anthropic's reports, we drop filtered and renormalize the remaining categories.
+        usage_raw  = read_csv(os.path.join(rsc_path, usage_data_source))
+        usage_raw["task_name"] = usage_raw["task_name"].str.lower().str.strip()
+
+        # Normalize the distribution for usage tasks after dropping "filtered" conversations
+        usage_raw = usage_raw.drop('filtered', axis = 1)
+        cols = ['validation', 'task_iteration', 'learning', 'feedback_loop', 'directive']
+        new_total = usage_raw[cols].sum(axis=1)
+        for col in cols:
+            usage_raw[col] = usage_raw[col] / new_total
+        
+
+        # Attach usage to the task descriptions/codes
+        # It's unclear which is the better choice methodologically regarding filling missing tasks. 
+        
+        if fill_missing_tasks:
+            # Doing it this way implies that since the tasks aren't in the data, they aren't being used.
+            # This provides fuller data but assumes that tasks that are similar to ones that are in the data are not comparable.
+            onet_tasks = onet_tasks.merge(
+                usage_raw,
+                how = 'left',
+                left_on = "Task",
+                right_on = "task_name"
+            ).assign(
+                validation     = lambda x: x["validation"].fillna(0),
+                task_iteration = lambda x: x["task_iteration"].fillna(0),
+                learning       = lambda x: x["learning"].fillna(0),
+                directive      = lambda x: x["directive"].fillna(0),
+                feedback_loop  = lambda x: x["feedback_loop"].fillna(0),
+                pct            = lambda x: x["pct"].fillna(0)
+            )
+        
+        else:
+            onet_tasks = usage_raw.merge(
+                onet_tasks,
+                how = 'left',
+                left_on = "task_name",
+                right_on = "Task"
+            )
+
+        # Sum types of usage into either augmentation or automation for a TASK
+        onet_tasks = onet_tasks.assign(
+            augmentation = lambda x: x["validation"] + x["task_iteration"] + x["learning"],
+            automation   = lambda x: x["directive"] + x["feedback_loop"],
+            pct_of_convs = lambda x: 100 * (x["pct"] / x["n_occurrences"]) / (x["pct"] / x["n_occurrences"]).sum()
+        ).drop(["validation", "task_iteration", "learning", "directive", "feedback_loop", "pct"], axis = 1)
+        
+        # Aggregate task sub-sums of usage to OCCUPATION level
+        # Note that we don't calculate percentages or normalize during this pre-processing step. As such, values are typically range(0,n(tasks_per_occ))
+        # We keep them un-normalized so that we can do normalization only once we aggregate microdata individuals into groups during processing
+        # If we are filling missing tasks, then every task should be counted and we fill totals with 1
+        # Otherwise, it's simply the sum of the normalized automation and augmentation metrics
+        onet_tasks['total'] = 1 if fill_missing_tasks else onet_tasks['automation'] + onet_tasks['augmentation']
+        onet_tasks[["augmentation", "automation", "total"]] = onet_tasks[["augmentation", "automation", 'total']].apply(lambda x: x * onet_tasks['t_wgt'])
+
+        temp = onet_tasks.groupby("O*NET-SOC Code").agg({
+            'augmentation': 'sum',
+            'automation':   'sum',
+            'total' :    'sum',
+            'pct_of_convs': 'sum'
+        }).reset_index().assign(
+            augmentation = lambda x: x['augmentation'],
+            automation   = lambda x: x['automation'],
+            total = lambda x: x['total'],
+            pct_of_convs = lambda x: x['pct_of_convs']
         )
+        
+        # Sets tasks with 0s in augmentation, automation, and total to NaN so that they are ignored in future calculations.
+        # This is only important for the method in which we do not fill tasks. In that configuration, 0s across the board (except for total) is a valid entry
+        # In this configuration, it would only serve to confound the future aggregations
+        if not fill_missing_tasks:
+            temp[['augmentation','automation','total']] = temp[['augmentation','automation','total']].mask(temp[['augmentation','automation','total']].eq(0).all(axis=1))
 
-    # Sum types of usage into either augmentation or automation for a TASK
-    onet_tasks = onet_tasks.assign(
-        augmentation = lambda x: x["validation"] + x["task_iteration"] + x["learning"],
-        automation   = lambda x: x["directive"] + x["feedback_loop"],
-        pct_of_convs = lambda x: 100 * (x["pct"] / x["n_occurrences"]) / (x["pct"] / x["n_occurrences"]).sum()
-    ).drop(["validation", "task_iteration", "learning", "directive", "feedback_loop", "pct"], axis = 1)
-    
-    # Aggregate task sub-sums of usage to OCCUPATION level
-    # Note that we don't calculate percentages or normalize during this pre-processing step. As such, values are typically range(0,n(tasks_per_occ))
-    # We keep them un-normalized so that we can do normalization only once we aggregate microdata individuals into groups during processing
-    # If we are filling missing tasks, then every task should be counted and we fill totals with 1
-    # Otherwise, it's simply the sum of the normalized automation and augmentation metrics
-    onet_tasks['total'] = 1 if fill_missing_tasks else onet_tasks['automation'] + onet_tasks['augmentation']
-    onet_tasks[["augmentation", "automation", "total"]] = onet_tasks[["augmentation", "automation", 'total']].apply(lambda x: x * onet_tasks['t_wgt'])
-
-    temp = onet_tasks.groupby("O*NET-SOC Code").agg({
-        'augmentation': 'sum',
-        'automation':   'sum',
-        'total' :    'sum',
-        'pct_of_convs': 'sum'
-    }).reset_index().assign(
-        augmentation = lambda x: x['augmentation'],
-        automation   = lambda x: x['automation'],
-        total = lambda x: x['total'],
-        pct_of_convs = lambda x: x['pct_of_convs']
-    )
-    
-    # Sets tasks with 0s in augmentation, automation, and total to NaN so that they are ignored in future calculations.
-    # This is only important for the method in which we do not fill tasks. In that configuration, 0s across the board (except for total) is a valid entry
-    # In this configuration, it would only serve to confound the future aggregations
-    if not fill_missing_tasks:
-        temp[['augmentation','automation','total']] = temp[['augmentation','automation','total']].mask(temp[['augmentation','automation','total']].eq(0).all(axis=1))
-
-    # Finally attach all OCCUPATION level metrics of exposure and usage
-    collapsed = collapsed.merge(
-        temp,
-        how = "left",
-        on = "O*NET-SOC Code"
-    )
+        # Finally attach all OCCUPATION level metrics of exposure and usage
+        collapsed = collapsed.merge(
+            temp,
+            how = "left",
+            on = "O*NET-SOC Code"
+        )
     
     socs = read_csv(os.path.join(rsc_path, "crosswalk.csv")).dropna(subset = 'cps_code').assign(
         # Processing values to facilitate easier merging later on
@@ -347,27 +362,50 @@ def collapse_exposure(rsc_path: str, samp: str, fill_missing_tasks: bool):
         left_on = "Code",
         right_on = "O*NET-SOC Code"
     )
-    
-    external = external.groupby('no_detail').agg({
-        'cps_code': lambda x: x.mode()[0] if len(x.mode()) > 0 else np.nan,
-        'mean_rating_human_alpha': 'mean',
-        'mean_rating_human_beta': 'mean',
-        'mean_rating_human_gamma': 'mean',
-        'gpt4_rubric1_alpha': 'mean',
-        'gpt4_rubric1_beta': 'mean',
-        'gpt4_rubric1_gamma': 'mean',
-        'gpt4_rubric2_beta': 'mean',
-        'gpt4_automation': 'mean',
-        'pct_of_convs': 'sum',
-        'augmentation': 'mean',
-        'automation': 'mean',
-        'total': 'mean'
-    }).reset_index().merge(
-        oes,
-        how = 'left',
-        left_on = 'no_detail',
-        right_on = 'OCC_CODE'
-    )
+
+    if usage_data_source == "job_exposure.csv":
+        external = external.groupby('no_detail').agg({
+            'cps_code': lambda x: x.mode()[0] if len(x.mode()) > 0 else np.nan,
+            'mean_rating_human_alpha': 'mean',
+            'mean_rating_human_beta': 'mean',
+            'mean_rating_human_gamma': 'mean',
+            'gpt4_rubric1_alpha': 'mean',
+            'gpt4_rubric1_beta': 'mean',
+            'gpt4_rubric1_gamma': 'mean',
+            'gpt4_rubric2_beta': 'mean',
+            'gpt4_automation': 'mean',
+        }).reset_index().merge(
+            job_exposure,
+            how = 'left',
+            left_on = 'no_detail',
+            right_on = 'occ_code'
+        ).merge(
+            oes,
+            how = 'left',
+            left_on = 'no_detail',
+            right_on = 'OCC_CODE'
+        )
+    else:
+        external = external.groupby('no_detail').agg({
+            'cps_code': lambda x: x.mode()[0] if len(x.mode()) > 0 else np.nan,
+            'mean_rating_human_alpha': 'mean',
+            'mean_rating_human_beta': 'mean',
+            'mean_rating_human_gamma': 'mean',
+            'gpt4_rubric1_alpha': 'mean',
+            'gpt4_rubric1_beta': 'mean',
+            'gpt4_rubric1_gamma': 'mean',
+            'gpt4_rubric2_beta': 'mean',
+            'gpt4_automation': 'mean',
+            'pct_of_convs': 'sum',
+            'augmentation': 'mean',
+            'automation': 'mean',
+            'total': 'mean'
+        }).reset_index().merge(
+            oes,
+            how = 'left',
+            left_on = 'no_detail',
+            right_on = 'OCC_CODE'
+        )
     
     def get_wp(var, total, weights):
             # Weighted sum of the metric at hand
@@ -377,70 +415,40 @@ def collapse_exposure(rsc_path: str, samp: str, fill_missing_tasks: bool):
 
             return (w_sum / w_total) if w_total > 0 else pandas.NA 
 
-    external = external.groupby('cps_code').agg(
-        mean_rating_human_alpha = pandas.NamedAgg(
-            column = 'mean_rating_human_alpha',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        mean_rating_human_beta = pandas.NamedAgg(
-            column = 'mean_rating_human_beta',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        mean_rating_human_gamma = pandas.NamedAgg(
-            column = 'mean_rating_human_gamma',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        gpt4_rubric1_alpha = pandas.NamedAgg(
-            column = 'gpt4_rubric1_alpha',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        gpt4_rubric1_beta = pandas.NamedAgg(
-            column = 'gpt4_rubric1_beta',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        gpt4_rubric1_gamma = pandas.NamedAgg(
-            column = 'gpt4_rubric1_gamma',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        gpt4_rubric2_beta = pandas.NamedAgg(
-            column = 'gpt4_rubric2_beta',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        gpt4_automation = pandas.NamedAgg(
-            column = 'gpt4_automation',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        pct_of_convs = pandas.NamedAgg(
-            column = 'pct_of_convs',
-            aggfunc = lambda x: x.sum()
-        ),
-        augmentation = pandas.NamedAgg(
-            column = 'augmentation',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        automation = pandas.NamedAgg(
-            column = 'automation',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        total = pandas.NamedAgg(
-            column = 'total',
-            aggfunc = lambda x, w=external["TOT_EMP"]: get_wp(x, 1, w.loc[x.index])
-        ),
-        employment_count = pandas.NamedAgg(
-            column = "TOT_EMP",
-            aggfunc = lambda x: x.sum()
-        )
-    ).reset_index().merge(
+    def wp_agg(col, w=external["TOT_EMP"]):
+        return pandas.NamedAgg(column=col, aggfunc=lambda x, w=w: get_wp(x, 1, w.loc[x.index]))
+
+    agg_dict = {
+        'mean_rating_human_alpha': wp_agg('mean_rating_human_alpha'),
+        'mean_rating_human_beta':  wp_agg('mean_rating_human_beta'),
+        'mean_rating_human_gamma': wp_agg('mean_rating_human_gamma'),
+        'gpt4_rubric1_alpha':      wp_agg('gpt4_rubric1_alpha'),
+        'gpt4_rubric1_beta':       wp_agg('gpt4_rubric1_beta'),
+        'gpt4_rubric1_gamma':      wp_agg('gpt4_rubric1_gamma'),
+        'gpt4_rubric2_beta':       wp_agg('gpt4_rubric2_beta'),
+        'gpt4_automation':         wp_agg('gpt4_automation'),
+        'employment_count': pandas.NamedAgg(column="TOT_EMP", aggfunc=lambda x: x.sum()),
+    }
+
+    if usage_data_source == "job_exposure.csv":
+        agg_dict['observed_exposure'] = wp_agg('observed_exposure')
+    else:
+        agg_dict['pct_of_convs'] = pandas.NamedAgg(column='pct_of_convs', aggfunc=lambda x: x.sum())
+        agg_dict['augmentation'] = wp_agg('augmentation')
+        agg_dict['automation']   = wp_agg('automation')
+        agg_dict['total']        = wp_agg('total')
+
+    external = external.groupby('cps_code').agg(**agg_dict).reset_index().merge(
         socs,
         how = "left",
         left_on = "cps_code",
         right_on = "cps_code"
     )
 
-    if fill_missing_tasks:
-        external.to_csv(os.path.join(rsc_path, "full_map_" + samp + "_fm" + ".csv"), index = False)
-    else:
-        external.to_csv(os.path.join(rsc_path, "full_map_" + samp + ".csv"), index = False)
+    #if fill_missing_tasks:
+    #    external.to_csv(os.path.join(rsc_path, "full_map_" + samp + "_fm" + ".csv"), index = False)
+    #else:
+    #    external.to_csv(os.path.join(rsc_path, "full_map_" + samp + ".csv"), index = False)
     
     return external
 
